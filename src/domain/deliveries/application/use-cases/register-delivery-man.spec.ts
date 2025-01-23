@@ -1,5 +1,4 @@
 import { InMemoryDeliveryManRepository } from './../../../../../test/repositories/in-memory-delivery-man-repository';
-import { beforeEach, describe, expect, it } from 'vitest';
 import { RegisterDeliveryManUseCase } from './register-delivery-man';
 import { FakeHasher } from 'test/cryptography/fake-hasher';
 
