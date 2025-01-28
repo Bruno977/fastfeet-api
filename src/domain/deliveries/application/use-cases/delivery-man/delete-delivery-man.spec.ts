@@ -1,6 +1,6 @@
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
-import { DeliveryMan } from '../../enterprise/entities/delivery-man';
-import { InMemoryDeliveryManRepository } from './../../../../../test/repositories/in-memory-delivery-man-repository';
+import { DeliveryMan } from '../../../enterprise/entities/delivery-man';
+import { InMemoryDeliveryManRepository } from '../../../../../../test/repositories/in-memory-delivery-man-repository';
 import { DeleteDeliveryManUseCase } from './delete-delivery-man';
 
 let deleteDeliveryManUseCase: DeleteDeliveryManUseCase;

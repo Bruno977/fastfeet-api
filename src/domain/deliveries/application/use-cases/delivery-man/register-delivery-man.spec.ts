@@ -1,5 +1,5 @@
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
-import { InMemoryDeliveryManRepository } from './../../../../../test/repositories/in-memory-delivery-man-repository';
+import { InMemoryDeliveryManRepository } from '../../../../../../test/repositories/in-memory-delivery-man-repository';
 import { RegisterDeliveryManUseCase } from './register-delivery-man';
 import { FakeHasher } from 'test/cryptography/fake-hasher';
 

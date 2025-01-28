@@ -1,6 +1,6 @@
 import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error';
-import { DeliveryMan } from '../../enterprise/entities/delivery-man';
-import { InMemoryDeliveryManRepository } from './../../../../../test/repositories/in-memory-delivery-man-repository';
+import { DeliveryMan } from '../../../enterprise/entities/delivery-man';
+import { InMemoryDeliveryManRepository } from '../../../../../../test/repositories/in-memory-delivery-man-repository';
 import { GetDeliveryManUseCase } from './get-delivery-man';
 
 let iMemoryDeliveryManRepository: InMemoryDeliveryManRepository;

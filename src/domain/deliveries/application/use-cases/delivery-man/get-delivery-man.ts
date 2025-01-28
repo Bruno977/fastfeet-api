@@ -1,5 +1,5 @@
 import { RoleProps } from 'src/core/types/role';
-import { DeliveryManRepository } from '../repositories/delivery-man-repository';
+import { DeliveryManRepository } from '../../repositories/delivery-man-repository';
 import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error';
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 

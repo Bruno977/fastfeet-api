@@ -1,6 +1,6 @@
 import { RoleProps } from 'src/core/types/role';
-import { HashGenerator } from '../cryptography/hash-generator';
-import { DeliveryManRepository } from '../repositories/delivery-man-repository';
+import { HashGenerator } from '../../cryptography/hash-generator';
+import { DeliveryManRepository } from '../../repositories/delivery-man-repository';
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error';
 

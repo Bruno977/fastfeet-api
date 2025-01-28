@@ -1,7 +1,7 @@
-import { InMemoryDeliveryManRepository } from './../../../../../test/repositories/in-memory-delivery-man-repository';
+import { InMemoryDeliveryManRepository } from '../../../../../../test/repositories/in-memory-delivery-man-repository';
 import { UpdateDeliveryManUseCase } from './update-delivery-man';
 import { FakeHasher } from 'test/cryptography/fake-hasher';
-import { DeliveryMan } from '../../enterprise/entities/delivery-man';
+import { DeliveryMan } from '../../../enterprise/entities/delivery-man';
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 
 let updateDeliveryManUseCase: UpdateDeliveryManUseCase;
