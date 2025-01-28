@@ -22,14 +22,16 @@ describe('GetDeliveryMan', () => {
     });
     await iMemoryDeliveryManRepository.create(deliveryMan);
     const response = await getDeliveryManUseCase.execute({
-      cpf: '12345678909',
+      id: deliveryMan.id.toString(),
+      role: 'ADMIN',
     });
     expect(response.deliveryMan).toEqual(deliveryMan);
   });
   it('should return an error if the delivery not exists', async () => {
     await expect(
       getDeliveryManUseCase.execute({
-        cpf: '12345678909',
+        id: '123456',
+        role: 'ADMIN',
       }),
     ).rejects.toThrow(ResourceNotFoundError);
   });

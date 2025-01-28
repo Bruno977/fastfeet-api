@@ -1,3 +1,4 @@
+import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 import { InMemoryDeliveryManRepository } from './../../../../../test/repositories/in-memory-delivery-man-repository';
 import { RegisterDeliveryManUseCase } from './register-delivery-man';
 import { FakeHasher } from 'test/cryptography/fake-hasher';
@@ -15,21 +16,21 @@ describe('RegisterDeliveryManUseCase', () => {
     );
   });
   it('should create an user', async () => {
-    const deliveryMan = {
+    await registerDeliveryManUseCase.execute({
       name: 'John Doe',
       cpf: '12345678909',
       password: '123456',
-    };
-    await registerDeliveryManUseCase.execute(deliveryMan);
+      role: 'ADMIN',
+    });
     expect(inMemoryDeliveryManRepository.deliveryMan.length).toBe(1);
   });
   it("should hash the user's password", async () => {
-    const deliveryMan = {
+    await registerDeliveryManUseCase.execute({
       name: 'John Doe',
       cpf: '12345678909',
       password: '123456',
-    };
-    await registerDeliveryManUseCase.execute(deliveryMan);
+      role: 'ADMIN',
+    });
 
     const hashedPassword = await fakeHasher.hash('123456');
 
@@ -38,14 +39,29 @@ describe('RegisterDeliveryManUseCase', () => {
     );
   });
   it('should not register an user with the same cpf', async () => {
-    const deliveryMan = {
+    await registerDeliveryManUseCase.execute({
       name: 'John Doe',
       cpf: '12345678909',
       password: '123456',
-    };
-    await registerDeliveryManUseCase.execute(deliveryMan);
+      role: 'ADMIN',
+    });
     await expect(
-      registerDeliveryManUseCase.execute(deliveryMan),
+      registerDeliveryManUseCase.execute({
+        name: 'John Doe',
+        cpf: '12345678909',
+        password: '123456',
+        role: 'ADMIN',
+      }),
     ).rejects.toThrow('CPF already in use');
+  });
+  it("should not register an user if it's not an admin", async () => {
+    await expect(
+      registerDeliveryManUseCase.execute({
+        name: 'John Doe',
+        cpf: '12345678909',
+        password: '123456',
+        role: 'DELIVERY_MAN',
+      }),
+    ).rejects.toThrow(NotAllowedError);
   });
 });

@@ -1,15 +1,16 @@
 import { RoleProps } from 'src/core/types/role';
 import { DeliveryManRepository } from '../repositories/delivery-man-repository';
-import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error';
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
+import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error';
 
-interface GetDeliveryManUseCaseRequest {
+interface DeleteDeliveryManUseCaseRequest {
   id: string;
   role: RoleProps;
 }
-export class GetDeliveryManUseCase {
+
+export class DeleteDeliveryManUseCase {
   constructor(private deliveryManRepository: DeliveryManRepository) {}
-  async execute({ id, role }: GetDeliveryManUseCaseRequest) {
+  async execute({ id, role }: DeleteDeliveryManUseCaseRequest) {
     if (role !== 'ADMIN') {
       throw new NotAllowedError();
     }
@@ -17,8 +18,6 @@ export class GetDeliveryManUseCase {
     if (!deliveryMan) {
       throw new ResourceNotFoundError();
     }
-    return {
-      deliveryMan,
-    };
+    await this.deliveryManRepository.delete(id);
   }
 }
