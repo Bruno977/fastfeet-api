@@ -1,0 +1,5 @@
+export type ORDER_STATUS =
+  | 'AWAITING_PICKUP'
+  | 'PICKED_UP'
+  | 'DELIVERED'
+  | 'RETURNED';

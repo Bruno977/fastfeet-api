@@ -12,4 +12,12 @@ export class InMemoryOrderRepository implements OrderRepository {
       this.order.find((order) => order.id.toString() === id) || null;
     return order;
   }
+  async delete(id: string) {
+    this.order = this.order.filter((order) => order.id.toString() !== id);
+  }
+  async update(order: Order) {
+    this.order = this.order.map((o) =>
+      o.id.toString() === order.id.toString() ? order : o,
+    );
+  }
 }
