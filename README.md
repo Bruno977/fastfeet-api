@@ -10,7 +10,7 @@
 - Deve ser possível marcar uma encomenda como entregue
 - Deve ser possível marcar uma encomenda como devolvida
 - Deve ser possível listar as encomendas com endereços de entrega próximo ao local do entregador
-- Deve ser possível alterar a senha de um usuário
+  - [x] Deve ser possível alterar a senha de um usuário
 - Deve ser possível listar as entregas de um usuário
 - Deve ser possível notificar o destinatário a cada alteração no status da encomenda
 
@@ -27,16 +27,16 @@
 Domain:
 - deliveries
     - Entities:
-      - DeliveryMan (entregador)
+      - [x] DeliveryMan (entregador)
       - Order (encomenda)
       - Recipient (destinatário)
       - Address (endereço)
         - Use Cases:
           - AuthenticateDeliveryMan (Autenticar entregador)
-          - CreateDeliveryMan (Criar entregador)
-          - UpdateDeliveryMan (Atualizar entregador)
-          - DeleteDeliveryMan (Remover entregador)
-          - FindDeliveryMan (Buscar entregador)
+          - [x] CreateDeliveryMan (Criar entregador)
+          - [x] UpdateDeliveryMan (Atualizar entregador)
+          - [x] DeleteDeliveryMan (Remover entregador)
+          - [x] FindDeliveryMan (Buscar entregador)
           - CreateOrder (Criar encomenda)
           - UpdateOrder (Atualizar encomenda)
           - DeleteOrder (Remover encomenda)
