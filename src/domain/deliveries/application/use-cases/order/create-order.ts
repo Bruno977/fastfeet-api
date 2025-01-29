@@ -29,7 +29,7 @@ export class CreateOrderUseCase {
       throw new DeliveryManNotFoundError();
     }
     const order = Order.create({
-      status: 'AWAITING_PICKUP',
+      status: 'NEW',
       description,
       deliveryManId: new UniqueEntityID(deliveryManId),
     });

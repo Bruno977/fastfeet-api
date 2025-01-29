@@ -13,7 +13,7 @@ export function makeOrder(
     {
       deliveryManId: new UniqueEntityID(),
       description: faker.lorem.text(),
-      status: 'AWAITING_PICKUP',
+      status: 'NEW',
       ...override,
     },
     id,

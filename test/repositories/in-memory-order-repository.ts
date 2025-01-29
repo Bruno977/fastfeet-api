@@ -1,4 +1,7 @@
-import { OrderRepository } from 'src/domain/deliveries/application/repositories/order-repository';
+import {
+  OrderRepository,
+  updateOrderStatusProps,
+} from 'src/domain/deliveries/application/repositories/order-repository';
 import { Order } from 'src/domain/deliveries/enterprise/entities/order';
 
 export class InMemoryOrderRepository implements OrderRepository {
@@ -19,5 +22,13 @@ export class InMemoryOrderRepository implements OrderRepository {
     this.order = this.order.map((o) =>
       o.id.toString() === order.id.toString() ? order : o,
     );
+  }
+  async updateOrderStatus({ orderId, status }: updateOrderStatusProps) {
+    this.order = this.order.map((order) => {
+      if (order.id.toString() === orderId) {
+        order.status = status;
+      }
+      return order;
+    });
   }
 }
