@@ -15,4 +15,5 @@ export abstract class OrderRepository {
     orderId,
     status,
   }: updateOrderStatusProps): Promise<void>;
+  abstract findAllByUser(id: string): Promise<Order[]>;
 }

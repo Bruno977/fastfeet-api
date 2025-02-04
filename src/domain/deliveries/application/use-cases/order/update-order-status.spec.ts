@@ -51,7 +51,7 @@ describe('UpdateOrderStatusUseCase', () => {
       }),
     ).rejects.toThrow(NotAllowedError);
   });
-  it('should not allow delivered status another delivery man', async () => {
+  it('should not allow a different delivery man to update order status to DELIVERED', async () => {
     const newDeliveryMan = makeDeliveryMan();
     await inMemoryDeliveryManRepository.create(newDeliveryMan);
     const newDeliveryMan2 = makeDeliveryMan();

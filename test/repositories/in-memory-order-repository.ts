@@ -31,4 +31,10 @@ export class InMemoryOrderRepository implements OrderRepository {
       return order;
     });
   }
+  async findAllByUser(id: string) {
+    const order = this.order.filter(
+      (order) => order.deliveryManId.toString() === id,
+    );
+    return order;
+  }
 }
