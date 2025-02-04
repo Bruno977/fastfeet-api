@@ -1,7 +1,6 @@
 import { InMemoryDeliveryManRepository } from 'test/repositories/in-memory-delivery-man-repository';
 import { InMemoryOrderRepository } from 'test/repositories/in-memory-order-repository';
 import { UpdateOrderUseCase } from './update-order';
-import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 import { makeOrder } from 'test/factories/makeOrder';
 import { makeDeliveryMan } from 'test/factories/makeDeliveryMan';
 import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error';

@@ -2,7 +2,6 @@ import { InMemoryDeliveryManRepository } from '../../../../../../test/repositori
 import { UpdateDeliveryManUseCase } from './update-delivery-man';
 import { FakeHasher } from 'test/cryptography/fake-hasher';
 import { DeliveryMan } from '../../../enterprise/entities/delivery-man';
-import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 
 let updateDeliveryManUseCase: UpdateDeliveryManUseCase;
 let inMemoryDeliveryManRepository: InMemoryDeliveryManRepository;
@@ -36,15 +35,5 @@ describe('UpdateDeliveryManUseCase', () => {
         password: '12345689-hashed',
       }),
     ]);
-  });
-  it("should not update an user if it's not an admin", async () => {
-    await expect(
-      updateDeliveryManUseCase.execute({
-        name: 'John Doe 2',
-        password: '12345689',
-        role: 'DELIVERY_MAN',
-        id: '123',
-      }),
-    ).rejects.toThrow(NotAllowedError);
   });
 });

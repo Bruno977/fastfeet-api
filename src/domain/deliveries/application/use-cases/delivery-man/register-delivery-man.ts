@@ -1,9 +1,9 @@
-import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 import { DeliveryMan } from '../../../enterprise/entities/delivery-man';
 import { HashGenerator } from '../../cryptography/hash-generator';
 import { DeliveryManRepository } from '../../repositories/delivery-man-repository';
 import { CpfAlreadyExistsError } from '../errors/cpf-already-exists';
 import { RoleProps } from 'src/core/types/role';
+import { AuthorizationService } from 'src/core/services/authorization-service';
 
 interface RegisterDeliveryManUseCaseRequest {
   name: string;
@@ -23,9 +23,8 @@ export class RegisterDeliveryManUseCase {
     password,
     role,
   }: RegisterDeliveryManUseCaseRequest) {
-    if (role !== 'ADMIN') {
-      throw new NotAllowedError();
-    }
+    AuthorizationService.verifyRole({ role, allowedRole: 'ADMIN' });
+
     const deliveryManWithSameCpf =
       await this.deliveryManRepository.findByCpf(cpf);
 

@@ -1,13 +1,13 @@
 import { UniqueEntityID } from './../../../../../core/entities/unique-entity-id';
 import { RoleProps } from 'src/core/types/role';
 import { OrderRepository } from '../../repositories/order-repository';
-import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error';
 import { ORDER_STATUS } from 'src/core/types/orderStatus';
 import { DeliveryManRepository } from '../../repositories/delivery-man-repository';
 import { DeliveryManNotFoundError } from '../errors/recipient-not-found-error';
 import { RecipientRepository } from '../../repositories/recipient-repository';
 import { RecipientNotFoundError } from '../errors/delivery-man-not-found-error copy';
+import { AuthorizationService } from 'src/core/services/authorization-service';
 
 interface UpdateOrderUseCaseRequest {
   orderId: string;
@@ -32,9 +32,8 @@ export class UpdateOrderUseCase {
     deliveryManId,
     recipientId,
   }: UpdateOrderUseCaseRequest) {
-    if (role !== 'ADMIN') {
-      throw new NotAllowedError();
-    }
+    AuthorizationService.verifyRole({ role, allowedRole: 'ADMIN' });
+
     const order = await this.orderRepository.findById(orderId);
     if (!order) {
       throw new ResourceNotFoundError();

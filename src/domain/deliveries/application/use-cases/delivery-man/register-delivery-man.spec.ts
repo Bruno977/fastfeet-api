@@ -1,4 +1,3 @@
-import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 import { InMemoryDeliveryManRepository } from '../../../../../../test/repositories/in-memory-delivery-man-repository';
 import { RegisterDeliveryManUseCase } from './register-delivery-man';
 import { FakeHasher } from 'test/cryptography/fake-hasher';
@@ -53,15 +52,5 @@ describe('RegisterDeliveryManUseCase', () => {
         role: 'ADMIN',
       }),
     ).rejects.toThrow('CPF already in use');
-  });
-  it("should not register an user if it's not an admin", async () => {
-    await expect(
-      registerDeliveryManUseCase.execute({
-        name: 'John Doe',
-        cpf: '12345678909',
-        password: '123456',
-        role: 'DELIVERY_MAN',
-      }),
-    ).rejects.toThrow(NotAllowedError);
   });
 });

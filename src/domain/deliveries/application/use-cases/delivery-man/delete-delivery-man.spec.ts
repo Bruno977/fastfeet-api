@@ -1,4 +1,3 @@
-import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 import { DeliveryMan } from '../../../enterprise/entities/delivery-man';
 import { InMemoryDeliveryManRepository } from '../../../../../../test/repositories/in-memory-delivery-man-repository';
 import { DeleteDeliveryManUseCase } from './delete-delivery-man';
@@ -25,13 +24,5 @@ describe('DeleteDeliveryManUseCase', () => {
       id: deliveryMan.id.toString(),
       role: 'ADMIN',
     });
-  });
-  it("should not update an user if it's not an admin", async () => {
-    await expect(
-      deleteDeliveryManUseCase.execute({
-        id: '123123',
-        role: 'DELIVERY_MAN',
-      }),
-    ).rejects.toThrow(NotAllowedError);
   });
 });

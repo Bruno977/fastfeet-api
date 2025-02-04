@@ -1,8 +1,8 @@
 import { RoleProps } from 'src/core/types/role';
 import { RecipientRepository } from '../../repositories/recipient-repository';
-import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 import { Recipient } from 'src/domain/deliveries/enterprise/entities/recipient';
 import { Address } from 'src/domain/deliveries/enterprise/entities/address';
+import { AuthorizationService } from 'src/core/services/authorization-service';
 
 interface CreateRecipientUseCaseProps {
   name: string;
@@ -29,9 +29,8 @@ export class CreateRecipientUseCase {
     zipCode,
     role,
   }: CreateRecipientUseCaseProps) {
-    if (role !== 'ADMIN') {
-      throw new NotAllowedError();
-    }
+    AuthorizationService.verifyRole({ role, allowedRole: 'ADMIN' });
+
     const address = Address.create({
       street,
       number,

@@ -1,8 +1,8 @@
 import { RoleProps } from 'src/core/types/role';
 import { HashGenerator } from '../../cryptography/hash-generator';
 import { DeliveryManRepository } from '../../repositories/delivery-man-repository';
-import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error';
+import { AuthorizationService } from 'src/core/services/authorization-service';
 
 interface UpdateDeliveryManUseCaseRequest {
   id: string;
@@ -17,9 +17,7 @@ export class UpdateDeliveryManUseCase {
     private hashGenerator: HashGenerator,
   ) {}
   async execute({ name, password, role, id }: UpdateDeliveryManUseCaseRequest) {
-    if (role !== 'ADMIN') {
-      throw new NotAllowedError();
-    }
+    AuthorizationService.verifyRole({ role, allowedRole: 'ADMIN' });
 
     const deliveryMan = await this.deliveryManRepository.findById(id);
 
