@@ -6,6 +6,7 @@ export interface OrderProps {
   description: string;
   status: ORDER_STATUS;
   deliveryManId: UniqueEntityID;
+  recipientId: UniqueEntityID;
   // deliveryDate: Date;
 }
 
@@ -24,6 +25,15 @@ export class Order extends Entity<OrderProps> {
   }
   get deliveryManId() {
     return this.props.deliveryManId;
+  }
+  set deliveryManId(value: UniqueEntityID) {
+    this.props.deliveryManId = value;
+  }
+  get recipientId() {
+    return this.props.recipientId;
+  }
+  set recipientId(value: UniqueEntityID) {
+    this.props.recipientId = value;
   }
   // get deliveryDate() {
   //   return this.props.deliveryDate;

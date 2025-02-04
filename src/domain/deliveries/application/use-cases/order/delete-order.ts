@@ -1,7 +1,7 @@
 import { RoleProps } from 'src/core/types/role';
 import { OrderRepository } from '../../repositories/order-repository';
-import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error';
+import { AuthorizationService } from 'src/core/services/authorization-service';
 
 interface DeleteOrderRequest {
   id: string;
@@ -11,9 +11,8 @@ interface DeleteOrderRequest {
 export class DeleteOrderUseCase {
   constructor(private orderRepository: OrderRepository) {}
   async execute({ id, role }: DeleteOrderRequest) {
-    if (role !== 'ADMIN') {
-      throw new NotAllowedError();
-    }
+    AuthorizationService.verifyRole({ role, allowedRole: 'ADMIN' });
+
     const order = await this.orderRepository.findById(id);
     if (!order) {
       throw new ResourceNotFoundError();

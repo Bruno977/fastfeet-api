@@ -1,10 +1,13 @@
+import { UniqueEntityID } from './../../../../../core/entities/unique-entity-id';
 import { RoleProps } from 'src/core/types/role';
 import { OrderRepository } from '../../repositories/order-repository';
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error';
 import { ORDER_STATUS } from 'src/core/types/orderStatus';
 import { DeliveryManRepository } from '../../repositories/delivery-man-repository';
-import { DeliveryManNotFoundError } from '../errors/delivery-man-not-found-error';
+import { DeliveryManNotFoundError } from '../errors/recipient-not-found-error';
+import { RecipientRepository } from '../../repositories/recipient-repository';
+import { RecipientNotFoundError } from '../errors/delivery-man-not-found-error copy';
 
 interface UpdateOrderUseCaseRequest {
   orderId: string;
@@ -12,12 +15,14 @@ interface UpdateOrderUseCaseRequest {
   status: ORDER_STATUS;
   description: string;
   deliveryManId: string;
+  recipientId: string;
 }
 
 export class UpdateOrderUseCase {
   constructor(
     private orderRepository: OrderRepository,
     private deliveryMan: DeliveryManRepository,
+    private recipientRepository: RecipientRepository,
   ) {}
   async execute({
     orderId,
@@ -25,6 +30,7 @@ export class UpdateOrderUseCase {
     status,
     description,
     deliveryManId,
+    recipientId,
   }: UpdateOrderUseCaseRequest) {
     if (role !== 'ADMIN') {
       throw new NotAllowedError();
@@ -37,8 +43,14 @@ export class UpdateOrderUseCase {
     if (!deliveryMan) {
       throw new DeliveryManNotFoundError();
     }
+    const recipient = await this.recipientRepository.findById(recipientId);
+    if (!recipient) {
+      throw new RecipientNotFoundError();
+    }
     order.status = status;
     order.description = description;
+    order.deliveryManId = new UniqueEntityID(deliveryManId);
+    order.recipientId = new UniqueEntityID(recipientId);
 
     await this.orderRepository.update(order);
   }
