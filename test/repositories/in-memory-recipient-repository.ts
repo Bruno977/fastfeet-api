@@ -14,4 +14,15 @@ export class InMemoryRecipientRepository implements RecipientRepository {
     );
     return recipient || null;
   }
+  async update(recipient: Recipient): Promise<void> {
+    const recipientIndex = this.recipients.findIndex(
+      (r) => r.id.toString() === recipient.id.toString(),
+    );
+    this.recipients[recipientIndex] = recipient;
+  }
+  async delete(id: string) {
+    this.recipients = this.recipients.filter(
+      (recipient) => recipient.id.toString() !== id,
+    );
+  }
 }
