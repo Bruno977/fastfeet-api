@@ -3,9 +3,9 @@ import { InMemoryRecipientRepository } from 'test/repositories/in-memory-recipie
 import { InMemoryDeliveryManRepository } from './../../../../../../test/repositories/in-memory-delivery-man-repository';
 import { InMemoryOrderRepository } from 'test/repositories/in-memory-order-repository';
 import { CreateOrderUseCase } from './create-order';
-import { DeliveryManNotFoundError } from '../errors/recipient-not-found-error';
+import { DeliveryManNotFoundError } from '../errors/delivery-man-not-found-error';
 import { makeRecipient } from 'test/factories/makeRecipient';
-import { RecipientNotFoundError } from '../errors/delivery-man-not-found-error copy';
+import { RecipientNotFoundError } from '../errors/recipient-not-found-error';
 
 let createOrderUseCase: CreateOrderUseCase;
 let inMemoryDeliveryManRepository: InMemoryDeliveryManRepository;

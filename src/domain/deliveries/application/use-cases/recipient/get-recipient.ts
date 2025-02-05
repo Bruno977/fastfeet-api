@@ -1,7 +1,8 @@
 import { RoleProps } from 'src/core/types/role';
 import { RecipientRepository } from '../../repositories/recipient-repository';
 import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error';
-import { AuthorizationService } from 'src/core/services/authorization-service';
+import { Authorization } from '../../auth/authorization';
+import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 
 interface GetRecipientUseCaseRequest {
   recipientId: string;
@@ -11,7 +12,10 @@ interface GetRecipientUseCaseRequest {
 export class GetRecipientUseCase {
   constructor(private recipientRepository: RecipientRepository) {}
   async execute({ recipientId, role }: GetRecipientUseCaseRequest) {
-    AuthorizationService.verifyRole({ role, allowedRole: 'ADMIN' });
+    const isAdmin = Authorization.hasPermission(role, 'get-recipient');
+    if (!isAdmin) {
+      throw new NotAllowedError();
+    }
     const recipient = await this.recipientRepository.findById(recipientId);
     if (!recipient) {
       throw new ResourceNotFoundError();

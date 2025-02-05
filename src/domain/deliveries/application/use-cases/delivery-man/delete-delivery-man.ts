@@ -1,7 +1,8 @@
-import { RoleProps } from 'src/core/types/role';
+import { NotAllowedError } from 'src/core/errors/not-allowed-error';
+import { Authorization } from '../../auth/authorization';
 import { DeliveryManRepository } from '../../repositories/delivery-man-repository';
 import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error';
-import { AuthorizationService } from 'src/core/services/authorization-service';
+import { RoleProps } from 'src/core/types/role';
 
 interface DeleteDeliveryManUseCaseRequest {
   id: string;
@@ -11,8 +12,10 @@ interface DeleteDeliveryManUseCaseRequest {
 export class DeleteDeliveryManUseCase {
   constructor(private deliveryManRepository: DeliveryManRepository) {}
   async execute({ id, role }: DeleteDeliveryManUseCaseRequest) {
-    AuthorizationService.verifyRole({ role, allowedRole: 'ADMIN' });
-
+    const isAdmin = Authorization.hasPermission(role, 'delete-delivery-man');
+    if (!isAdmin) {
+      throw new NotAllowedError();
+    }
     const deliveryMan = await this.deliveryManRepository.findById(id);
     if (!deliveryMan) {
       throw new ResourceNotFoundError();

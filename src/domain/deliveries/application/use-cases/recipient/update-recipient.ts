@@ -1,7 +1,8 @@
 import { RoleProps } from 'src/core/types/role';
 import { RecipientRepository } from '../../repositories/recipient-repository';
 import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error';
-import { AuthorizationService } from 'src/core/services/authorization-service';
+import { Authorization } from '../../auth/authorization';
+import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 
 interface UpdateRecipientUseCaseRequest {
   recipientId: string;
@@ -30,7 +31,10 @@ export class UpdateRecipientUseCase {
     zipCode,
     role,
   }: UpdateRecipientUseCaseRequest) {
-    AuthorizationService.verifyRole({ role, allowedRole: 'ADMIN' });
+    const isAdmin = Authorization.hasPermission(role, 'update-recipient');
+    if (!isAdmin) {
+      throw new NotAllowedError();
+    }
 
     const recipient = await this.recipientRepository.findById(recipientId);
     if (!recipient) {

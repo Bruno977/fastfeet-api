@@ -3,7 +3,7 @@ import { GetOrderByUserUseCase } from './get-order-by-user';
 import { InMemoryDeliveryManRepository } from 'test/repositories/in-memory-delivery-man-repository';
 import { makeOrder } from 'test/factories/makeOrder';
 import { makeDeliveryMan } from 'test/factories/makeDeliveryMan';
-import { DeliveryManNotFoundError } from '../errors/recipient-not-found-error';
+import { DeliveryManNotFoundError } from '../errors/delivery-man-not-found-error';
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 
 let getOrderByUserUseCase: GetOrderByUserUseCase;

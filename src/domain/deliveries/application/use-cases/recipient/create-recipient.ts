@@ -2,7 +2,8 @@ import { RoleProps } from 'src/core/types/role';
 import { RecipientRepository } from '../../repositories/recipient-repository';
 import { Recipient } from 'src/domain/deliveries/enterprise/entities/recipient';
 import { Address } from 'src/domain/deliveries/enterprise/entities/address';
-import { AuthorizationService } from 'src/core/services/authorization-service';
+import { Authorization } from '../../auth/authorization';
+import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 
 interface CreateRecipientUseCaseProps {
   name: string;
@@ -29,7 +30,10 @@ export class CreateRecipientUseCase {
     zipCode,
     role,
   }: CreateRecipientUseCaseProps) {
-    AuthorizationService.verifyRole({ role, allowedRole: 'ADMIN' });
+    const isAdmin = Authorization.hasPermission(role, 'create-recipient');
+    if (!isAdmin) {
+      throw new NotAllowedError();
+    }
 
     const address = Address.create({
       street,

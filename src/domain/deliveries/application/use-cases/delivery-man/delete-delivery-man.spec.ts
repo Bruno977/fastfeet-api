@@ -7,6 +7,7 @@ let inMemoryDeliveryManRepository: InMemoryDeliveryManRepository;
 describe('DeleteDeliveryManUseCase', () => {
   beforeEach(() => {
     inMemoryDeliveryManRepository = new InMemoryDeliveryManRepository();
+
     deleteDeliveryManUseCase = new DeleteDeliveryManUseCase(
       inMemoryDeliveryManRepository,
     );
@@ -16,6 +17,7 @@ describe('DeleteDeliveryManUseCase', () => {
       name: 'John Doe',
       cpf: '12345678909',
       password: '123456',
+      role: 'ADMIN',
     });
     await inMemoryDeliveryManRepository.create(deliveryMan);
     expect(inMemoryDeliveryManRepository.deliveryMan).toHaveLength(1);

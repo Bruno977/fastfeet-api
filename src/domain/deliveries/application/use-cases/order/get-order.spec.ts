@@ -18,6 +18,7 @@ describe('GetOrderUseCase', () => {
       cpf: '12345678901',
       name: 'jhon doe',
       password: '123456',
+      role: 'ADMIN',
     });
 
     await inMemoryDeliveryManRepository.create(deliveryMan);

@@ -19,6 +19,7 @@ describe('GetDeliveryMan', () => {
       name: 'John Doe',
       cpf: '12345678909',
       password: '123456',
+      role: 'ADMIN',
     });
     await iMemoryDeliveryManRepository.create(deliveryMan);
     const response = await getDeliveryManUseCase.execute({

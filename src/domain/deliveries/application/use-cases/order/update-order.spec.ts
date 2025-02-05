@@ -6,7 +6,7 @@ import { makeDeliveryMan } from 'test/factories/makeDeliveryMan';
 import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error';
 import { InMemoryRecipientRepository } from 'test/repositories/in-memory-recipient-repository';
 import { makeRecipient } from 'test/factories/makeRecipient';
-import { RecipientNotFoundError } from '../errors/delivery-man-not-found-error copy';
+import { RecipientNotFoundError } from '../errors/recipient-not-found-error';
 
 let updateOrderUseCase: UpdateOrderUseCase;
 let inMemoryOrderRepository: InMemoryOrderRepository;

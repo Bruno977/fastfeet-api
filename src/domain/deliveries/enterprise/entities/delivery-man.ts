@@ -1,10 +1,12 @@
 import { Entity } from 'src/core/entities/entity';
 import { UniqueEntityID } from 'src/core/entities/unique-entity-id';
+import { RoleProps } from 'src/core/types/role';
 
 export interface DeliveryManProps {
   name: string;
   cpf: string;
   password: string;
+  role: RoleProps;
 }
 
 export class DeliveryMan extends Entity<DeliveryManProps> {
@@ -24,6 +26,14 @@ export class DeliveryMan extends Entity<DeliveryManProps> {
 
   set password(password: string) {
     this.props.password = password;
+  }
+
+  get role() {
+    return this.props.role;
+  }
+
+  set role(role: RoleProps) {
+    this.props.role = role;
   }
 
   static create(props: DeliveryManProps, id?: UniqueEntityID) {

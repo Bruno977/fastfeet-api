@@ -4,10 +4,11 @@ import { OrderRepository } from '../../repositories/order-repository';
 import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error';
 import { ORDER_STATUS } from 'src/core/types/orderStatus';
 import { DeliveryManRepository } from '../../repositories/delivery-man-repository';
-import { DeliveryManNotFoundError } from '../errors/recipient-not-found-error';
+import { DeliveryManNotFoundError } from '../errors/delivery-man-not-found-error';
 import { RecipientRepository } from '../../repositories/recipient-repository';
-import { RecipientNotFoundError } from '../errors/delivery-man-not-found-error copy';
-import { AuthorizationService } from 'src/core/services/authorization-service';
+import { RecipientNotFoundError } from '../errors/recipient-not-found-error';
+import { Authorization } from '../../auth/authorization';
+import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 
 interface UpdateOrderUseCaseRequest {
   orderId: string;
@@ -32,7 +33,10 @@ export class UpdateOrderUseCase {
     deliveryManId,
     recipientId,
   }: UpdateOrderUseCaseRequest) {
-    AuthorizationService.verifyRole({ role, allowedRole: 'ADMIN' });
+    const isAdmin = Authorization.hasPermission(role, 'update-order');
+    if (!isAdmin) {
+      throw new NotAllowedError();
+    }
 
     const order = await this.orderRepository.findById(orderId);
     if (!order) {

@@ -1,5 +1,5 @@
-export class DeliveryManNotFoundError extends Error {
+export class RecipientNotFoundError extends Error {
   constructor() {
-    super('Delivery man not found');
+    super('Recipient not found');
   }
 }

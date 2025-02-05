@@ -3,7 +3,8 @@ import { HashGenerator } from '../../cryptography/hash-generator';
 import { DeliveryManRepository } from '../../repositories/delivery-man-repository';
 import { CpfAlreadyExistsError } from '../errors/cpf-already-exists';
 import { RoleProps } from 'src/core/types/role';
-import { AuthorizationService } from 'src/core/services/authorization-service';
+import { Authorization } from '../../auth/authorization';
+import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 
 interface RegisterDeliveryManUseCaseRequest {
   name: string;
@@ -23,7 +24,10 @@ export class RegisterDeliveryManUseCase {
     password,
     role,
   }: RegisterDeliveryManUseCaseRequest) {
-    AuthorizationService.verifyRole({ role, allowedRole: 'ADMIN' });
+    const isAdmin = Authorization.hasPermission(role, 'register-delivery-man');
+    if (!isAdmin) {
+      throw new NotAllowedError();
+    }
 
     const deliveryManWithSameCpf =
       await this.deliveryManRepository.findByCpf(cpf);
@@ -38,6 +42,7 @@ export class RegisterDeliveryManUseCase {
       name,
       cpf,
       password: hashedPassword,
+      role,
     });
 
     await this.deliveryManRepository.create(deliveryMan);

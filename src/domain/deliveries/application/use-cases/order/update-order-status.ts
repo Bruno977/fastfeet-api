@@ -1,7 +1,7 @@
 import { ORDER_STATUS } from 'src/core/types/orderStatus';
 import { OrderRepository } from '../../repositories/order-repository';
 import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error';
-import { DeliveryManNotFoundError } from '../errors/recipient-not-found-error';
+import { DeliveryManNotFoundError } from '../errors/delivery-man-not-found-error';
 import { DeliveryManRepository } from '../../repositories/delivery-man-repository';
 import { RoleProps } from 'src/core/types/role';
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
