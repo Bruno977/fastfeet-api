@@ -7,7 +7,7 @@ export interface OrderProps {
   status: ORDER_STATUS;
   deliveryManId: UniqueEntityID;
   recipientId: UniqueEntityID;
-  // deliveryDate: Date;
+  attachmentId?: UniqueEntityID | null;
 }
 
 export class Order extends Entity<OrderProps> {
@@ -35,9 +35,12 @@ export class Order extends Entity<OrderProps> {
   set recipientId(value: UniqueEntityID) {
     this.props.recipientId = value;
   }
-  // get deliveryDate() {
-  //   return this.props.deliveryDate;
-  // }
+  get attachmentId() {
+    return this.props.attachmentId;
+  }
+  set attachmentId(value: UniqueEntityID | null | undefined) {
+    this.props.attachmentId = value;
+  }
   static create(props: OrderProps, id?: UniqueEntityID) {
     return new Order(props, id);
   }

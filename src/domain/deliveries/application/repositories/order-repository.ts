@@ -1,9 +1,11 @@
 import { ORDER_STATUS } from 'src/core/types/orderStatus';
 import { Order } from '../../enterprise/entities/order';
+import { UniqueEntityID } from 'src/core/entities/unique-entity-id';
 
 export interface updateOrderStatusProps {
   orderId: string;
   status: ORDER_STATUS;
+  attachmentId: UniqueEntityID | null;
 }
 export interface findManyNearbyProps {
   latitude: number;
@@ -17,10 +19,7 @@ export abstract class OrderRepository {
   abstract findById(id: string): Promise<Order | null>;
   abstract delete(id: string): Promise<void>;
   abstract update(order: Order): Promise<void>;
-  abstract updateOrderStatus({
-    orderId,
-    status,
-  }: updateOrderStatusProps): Promise<void>;
+  abstract updateOrderStatus(params: updateOrderStatusProps): Promise<void>;
   abstract findAllByUser(id: string): Promise<Order[]>;
   abstract findManyNearby(params: findManyNearbyProps): Promise<Order[]>;
 }

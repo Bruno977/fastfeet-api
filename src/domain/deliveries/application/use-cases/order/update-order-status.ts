@@ -5,10 +5,13 @@ import { DeliveryManNotFoundError } from '../errors/delivery-man-not-found-error
 import { DeliveryManRepository } from '../../repositories/delivery-man-repository';
 import { RoleProps } from 'src/core/types/role';
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
+import { AttachmentRequiredError } from '../errors/attachment-required-error';
+import { UniqueEntityID } from 'src/core/entities/unique-entity-id';
 
 interface UpdateOrderStatusUseCaseRequest {
   orderId: string;
   deliveryManId: string;
+  attachmentId?: string | null;
   status: ORDER_STATUS;
   role: RoleProps;
 }
@@ -22,6 +25,7 @@ export class UpdateOrderStatusUseCase {
   async execute({
     deliveryManId,
     orderId,
+    attachmentId = null,
     status,
     role,
   }: UpdateOrderStatusUseCaseRequest) {
@@ -41,9 +45,17 @@ export class UpdateOrderStatusUseCase {
     if (status === 'DELIVERED' && !isSameDeliveryMan) {
       throw new NotAllowedError();
     }
+    if (status === 'DELIVERED' && !attachmentId) {
+      throw new AttachmentRequiredError();
+    }
+    const newAttachmentId = attachmentId
+      ? new UniqueEntityID(attachmentId)
+      : null;
+
     await this.orderRepository.updateOrderStatus({
       orderId,
       status,
+      attachmentId: newAttachmentId,
     });
   }
 }
