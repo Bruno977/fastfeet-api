@@ -7,6 +7,8 @@ interface AddressProps {
   city: string;
   state: string;
   zipCode: string;
+  latitude: number;
+  longitude: number;
 }
 
 export class Address extends Entity<AddressProps> {
@@ -45,6 +47,18 @@ export class Address extends Entity<AddressProps> {
   }
   set zipCode(value: string) {
     this.props.zipCode = value;
+  }
+  get latitude() {
+    return this.props.latitude;
+  }
+  set latitude(value: number) {
+    this.props.latitude = value;
+  }
+  get longitude() {
+    return this.props.longitude;
+  }
+  set longitude(value: number) {
+    this.props.longitude = value;
   }
   static create(props: AddressProps) {
     return new Address(props);

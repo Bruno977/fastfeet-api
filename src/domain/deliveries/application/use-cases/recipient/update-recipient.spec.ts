@@ -26,6 +26,8 @@ describe('UpdateRecipientUseCase', () => {
       city: 'Faketown',
       state: 'FS',
       zipCode: '12345-678',
+      latitude: -22.932381,
+      longitude: -43.173639,
       role: 'ADMIN',
     });
     const updatedRecipient = await inMemoryRecipientRepository.findById(
@@ -46,6 +48,8 @@ describe('UpdateRecipientUseCase', () => {
         city: 'Faketown',
         state: 'FS',
         zipCode: '12345-678',
+        latitude: -22.932381,
+        longitude: -43.173639,
         role: 'ADMIN',
       }),
     ).rejects.toThrow(ResourceNotFoundError);

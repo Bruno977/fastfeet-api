@@ -14,6 +14,8 @@ interface UpdateRecipientUseCaseRequest {
   city: string;
   state: string;
   zipCode: string;
+  latitude: number;
+  longitude: number;
   role: RoleProps;
 }
 
@@ -29,6 +31,8 @@ export class UpdateRecipientUseCase {
     city,
     state,
     zipCode,
+    latitude,
+    longitude,
     role,
   }: UpdateRecipientUseCaseRequest) {
     const isAdmin = Authorization.hasPermission(role, 'update-recipient');
@@ -48,6 +52,8 @@ export class UpdateRecipientUseCase {
     recipient.address.city = city;
     recipient.address.state = state;
     recipient.address.zipCode = zipCode;
+    recipient.address.latitude = latitude;
+    recipient.address.longitude = longitude;
 
     await this.recipientRepository.update(recipient);
   }

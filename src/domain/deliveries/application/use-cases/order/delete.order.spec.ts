@@ -1,3 +1,4 @@
+import { InMemoryRecipientRepository } from './../../../../../../test/repositories/in-memory-recipient-repository';
 import { InMemoryOrderRepository } from 'test/repositories/in-memory-order-repository';
 import { DeleteOrderUseCase } from './delete-order';
 import { makeOrder } from 'test/factories/makeOrder';
@@ -5,10 +6,14 @@ import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error'
 
 let deleteOrderUseCase: DeleteOrderUseCase;
 let inMemoryOrderRepository: InMemoryOrderRepository;
+let inMemoryRecipientRepository: InMemoryRecipientRepository;
 
 describe('DeleteOrderUseCase', () => {
   beforeEach(() => {
-    inMemoryOrderRepository = new InMemoryOrderRepository();
+    inMemoryRecipientRepository = new InMemoryRecipientRepository();
+    inMemoryOrderRepository = new InMemoryOrderRepository(
+      inMemoryRecipientRepository,
+    );
     deleteOrderUseCase = new DeleteOrderUseCase(inMemoryOrderRepository);
   });
   it('should delete an order', async () => {

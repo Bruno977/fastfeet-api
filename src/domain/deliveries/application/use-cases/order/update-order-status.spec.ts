@@ -4,12 +4,18 @@ import { makeDeliveryMan } from 'test/factories/makeDeliveryMan';
 import { InMemoryDeliveryManRepository } from 'test/repositories/in-memory-delivery-man-repository';
 import { makeOrder } from 'test/factories/makeOrder';
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
+import { InMemoryRecipientRepository } from 'test/repositories/in-memory-recipient-repository';
+
 let updateOrderStatusUseCase: UpdateOrderStatusUseCase;
 let inMemoryOrderRepository: InMemoryOrderRepository;
 let inMemoryDeliveryManRepository: InMemoryDeliveryManRepository;
+let inMemoryRecipientRepository: InMemoryRecipientRepository;
 describe('UpdateOrderStatusUseCase', () => {
   beforeEach(() => {
-    inMemoryOrderRepository = new InMemoryOrderRepository();
+    inMemoryRecipientRepository = new InMemoryRecipientRepository();
+    inMemoryOrderRepository = new InMemoryOrderRepository(
+      inMemoryRecipientRepository,
+    );
     inMemoryDeliveryManRepository = new InMemoryDeliveryManRepository();
     updateOrderStatusUseCase = new UpdateOrderStatusUseCase(
       inMemoryOrderRepository,

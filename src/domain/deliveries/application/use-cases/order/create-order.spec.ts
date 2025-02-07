@@ -13,9 +13,11 @@ let inMemoryRecipientRepository: InMemoryRecipientRepository;
 let inMemoryOrderRepository: InMemoryOrderRepository;
 describe('CreateOrderUseCase', () => {
   beforeEach(() => {
-    inMemoryOrderRepository = new InMemoryOrderRepository();
     inMemoryDeliveryManRepository = new InMemoryDeliveryManRepository();
     inMemoryRecipientRepository = new InMemoryRecipientRepository();
+    inMemoryOrderRepository = new InMemoryOrderRepository(
+      inMemoryRecipientRepository,
+    );
     createOrderUseCase = new CreateOrderUseCase(
       inMemoryOrderRepository,
       inMemoryDeliveryManRepository,

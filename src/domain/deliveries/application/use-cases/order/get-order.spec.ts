@@ -3,13 +3,18 @@ import { InMemoryOrderRepository } from './../../../../../../test/repositories/i
 import { GetOrderUseCase } from './get-order';
 import { InMemoryDeliveryManRepository } from 'test/repositories/in-memory-delivery-man-repository';
 import { makeOrder } from 'test/factories/makeOrder';
+import { InMemoryRecipientRepository } from 'test/repositories/in-memory-recipient-repository';
 
 let getOrderUseCase: GetOrderUseCase;
 let inMemoryOrderRepository: InMemoryOrderRepository;
 let inMemoryDeliveryManRepository: InMemoryDeliveryManRepository;
+let inMemoryRecipientRepository: InMemoryRecipientRepository;
 describe('GetOrderUseCase', () => {
   beforeEach(() => {
-    inMemoryOrderRepository = new InMemoryOrderRepository();
+    inMemoryRecipientRepository = new InMemoryRecipientRepository();
+    inMemoryOrderRepository = new InMemoryOrderRepository(
+      inMemoryRecipientRepository,
+    );
     inMemoryDeliveryManRepository = new InMemoryDeliveryManRepository();
     getOrderUseCase = new GetOrderUseCase(inMemoryOrderRepository);
   });

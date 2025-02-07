@@ -12,6 +12,7 @@ export function makeOrder(
   const order = Order.create(
     {
       deliveryManId: new UniqueEntityID(),
+      recipientId: new UniqueEntityID(),
       description: faker.lorem.text(),
       status: 'NEW',
       ...override,

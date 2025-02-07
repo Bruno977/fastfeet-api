@@ -5,6 +5,12 @@ export interface updateOrderStatusProps {
   orderId: string;
   status: ORDER_STATUS;
 }
+export interface findManyNearbyProps {
+  latitude: number;
+  longitude: number;
+  deliveryManId: string;
+  orders: Order[];
+}
 
 export abstract class OrderRepository {
   abstract create(order: Order): Promise<void>;
@@ -16,4 +22,5 @@ export abstract class OrderRepository {
     status,
   }: updateOrderStatusProps): Promise<void>;
   abstract findAllByUser(id: string): Promise<Order[]>;
+  abstract findManyNearby(params: findManyNearbyProps): Promise<Order[]>;
 }

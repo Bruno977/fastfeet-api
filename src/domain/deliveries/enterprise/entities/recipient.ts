@@ -24,6 +24,7 @@ export class Recipient extends Entity<RecipientProps> {
   get address() {
     return this.props.address;
   }
+
   static create(props: RecipientProps, id?: UniqueEntityID) {
     return new Recipient(props, id);
   }

@@ -5,13 +5,18 @@ import { makeOrder } from 'test/factories/makeOrder';
 import { makeDeliveryMan } from 'test/factories/makeDeliveryMan';
 import { DeliveryManNotFoundError } from '../errors/delivery-man-not-found-error';
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
+import { InMemoryRecipientRepository } from 'test/repositories/in-memory-recipient-repository';
 
 let getOrderByUserUseCase: GetOrderByUserUseCase;
 let inMemoryOrderRepository: InMemoryOrderRepository;
+let inMemoryRecipientRepository: InMemoryRecipientRepository;
 let inMemoryDeliveryManRepository: InMemoryDeliveryManRepository;
 describe('GetOrderByUserUseCase', () => {
   beforeEach(() => {
-    inMemoryOrderRepository = new InMemoryOrderRepository();
+    inMemoryRecipientRepository = new InMemoryRecipientRepository();
+    inMemoryOrderRepository = new InMemoryOrderRepository(
+      inMemoryRecipientRepository,
+    );
     inMemoryDeliveryManRepository = new InMemoryDeliveryManRepository();
     getOrderByUserUseCase = new GetOrderByUserUseCase(
       inMemoryOrderRepository,

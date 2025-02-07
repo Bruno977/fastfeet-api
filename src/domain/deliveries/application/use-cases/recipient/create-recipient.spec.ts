@@ -21,6 +21,8 @@ describe('Create Recipient Use Case', () => {
       state: newRecipient.address.state,
       street: newRecipient.address.street,
       zipCode: newRecipient.address.zipCode,
+      latitude: -22.932381,
+      longitude: -43.173639,
       role: 'ADMIN',
     });
     expect(inMemoryRecipientRepository.recipients).toHaveLength(1);

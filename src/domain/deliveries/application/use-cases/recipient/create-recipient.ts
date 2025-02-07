@@ -14,6 +14,8 @@ interface CreateRecipientUseCaseProps {
   city: string;
   state: string;
   zipCode: string;
+  latitude: number;
+  longitude: number;
   role: RoleProps;
 }
 
@@ -29,6 +31,8 @@ export class CreateRecipientUseCase {
     state,
     zipCode,
     role,
+    latitude,
+    longitude,
   }: CreateRecipientUseCaseProps) {
     const isAdmin = Authorization.hasPermission(role, 'create-recipient');
     if (!isAdmin) {
@@ -42,6 +46,8 @@ export class CreateRecipientUseCase {
       city,
       state,
       zipCode,
+      latitude,
+      longitude,
     });
     const recipient = Recipient.create({
       cpf,

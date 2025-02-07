@@ -1,7 +1,7 @@
 ### Regras da aplicação
 
 - A aplicação deve ter dois tipos de usuário, entregador e/ou admin
-- Deve ser possível realizar login com CPF e Senha
+- [x] Deve ser possível realizar login com CPF e Senha
 - [x] Deve ser possível realizar o CRUD dos entregadores
 - [x] Deve ser possível realizar o CRUD das encomendas
 - [x] Deve ser possível realizar o CRUD dos destinatários
@@ -29,10 +29,10 @@ Domain:
     - Entities:
       - [x] DeliveryMan (entregador)
       - [x] Order (encomenda)
-      - Recipient (destinatário)
-      - Address (endereço)
+      - [x] Recipient (destinatário)
+      - [x] Address (endereço)
         - Use Cases:
-          - AuthenticateDeliveryMan (Autenticar entregador)
+          - [x] AuthenticateDeliveryMan (Autenticar entregador)
           - [x] CreateDeliveryMan (Criar entregador)
           - [x] UpdateDeliveryMan (Atualizar entregador)
           - [x] DeleteDeliveryMan (Remover entregador)
@@ -41,13 +41,13 @@ Domain:
           - [x] UpdateOrder (Atualizar encomenda)
           - [x] DeleteOrder (Remover encomenda)
           - [x] FindOrder (Buscar encomenda)
-          - CreateRecipient (Criar destinatário)
-          - UpdateRecipient (Atualizar destinatário)
-          - DeleteRecipient (Remover destinatário)
-          - FindRecipient (Buscar destinatário)
+          - [x] CreateRecipient (Criar destinatário)
+          - [x] UpdateRecipient (Atualizar destinatário)
+          - [x] DeleteRecipient (Remover destinatário)
+          - [x] FindRecipient (Buscar destinatário)
           - PickUpOrder (Retirar uma encomenda)
-          - UpdateOrderStatus (Alterar status da encomenda)
-          - ListOrders (Listar as encomendas)
+          - [x] UpdateOrderStatus (Alterar status da encomenda)
+          - [x] ListOrders (Listar as encomendas)
           - ListDeliveries (Listar as entregas)
 - notification
     - Entities:

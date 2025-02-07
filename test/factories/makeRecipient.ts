@@ -17,6 +17,9 @@ export function makeRecipient(
     state: faker.location.state(),
     street: faker.location.street(),
     zipCode: faker.location.zipCode(),
+    latitude: faker.location.latitude(),
+    longitude: faker.location.longitude(),
+    ...(override.address ?? {}),
   });
   const recipient = Recipient.create(
     {
