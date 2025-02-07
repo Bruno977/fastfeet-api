@@ -69,4 +69,37 @@ describe('Fetch Nearby Order Use Case', () => {
       expect.objectContaining({ description: 'description 2' }),
     ]);
   });
+  it('should return orders current user', async () => {
+    const newDeliveryMan = makeDeliveryMan();
+    await inMemoryDeliveryManRepository.create(newDeliveryMan);
+    const newDeliveryMan2 = makeDeliveryMan();
+    await inMemoryDeliveryManRepository.create(newDeliveryMan2);
+
+    const recipient1 = makeRecipient();
+    const recipient2 = makeRecipient();
+
+    await inMemoryRecipientRepository.create(recipient1);
+    await inMemoryRecipientRepository.create(recipient2);
+
+    await orderRepository.create(
+      makeOrder({
+        deliveryManId: newDeliveryMan.id,
+        recipientId: recipient1.id,
+        description: 'description',
+      }),
+    );
+    await orderRepository.create(
+      makeOrder({
+        deliveryManId: newDeliveryMan.id,
+        recipientId: recipient1.id,
+        description: 'description 2',
+      }),
+    );
+    await orderRepository.create(
+      makeOrder({
+        deliveryManId: newDeliveryMan.id,
+        recipientId: recipient2.id,
+      }),
+    );
+  });
 });
