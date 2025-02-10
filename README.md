@@ -1,6 +1,6 @@
 ### Regras da aplicação
 
-- A aplicação deve ter dois tipos de usuário, entregador e/ou admin
+- [x] A aplicação deve ter dois tipos de usuário, entregador e/ou admin
 - [x] Deve ser possível realizar login com CPF e Senha
 - [x] Deve ser possível realizar o CRUD dos entregadores
 - [x] Deve ser possível realizar o CRUD das encomendas
@@ -19,7 +19,7 @@
 - [x] Somente usuário do tipo admin pode realizar operações de CRUD nas encomendas
 - [x] Somente usuário do tipo admin pode realizar operações de CRUD dos entregadores
 - [x] Somente usuário do tipo admin pode realizar operações de CRUD dos destinatários
-- Para marcar uma encomenda como entregue é obrigatório o envio de uma foto
+- [x] Para marcar uma encomenda como entregue é obrigatório o envio de uma foto
 - [x] Somente o entregador que retirou a encomenda pode marcar ela como entregue
 - [x] Somente o admin pode alterar a senha de um usuário
 - [x] Não deve ser possível um entregador listar as encomendas de outro entregador

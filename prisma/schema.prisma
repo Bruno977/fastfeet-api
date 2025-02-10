@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  DELIVERY_MAN
+  ADMIN
+}
+
+enum Status {
+  NEW
+  AWAITING_PICKUP
+  PICKED_UP
+  DELIVERED
+  RETURNED
+}
+
+model User {
+  id       String  @id @default(uuid())
+  cpf      String  @unique
+  name     String
+  password String
+  role     Role
+  Order    Order[]
+
+  @@map("users")
+}
+
+model Order {
+  id     String @id @default(uuid())
+  status Status
+
+  userId  User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  recipientId  Recipient @relation(fields: [recipient_id], references: [id])
+  recipient_id String
+}
+
+model Recipient {
+  id           String  @id @default(uuid())
+  name         String
+  cpf          String  @unique
+  street       String
+  number       String
+  neighborhood String
+  city         String
+  state        String
+  zipCode      String
+  latitude     Decimal
+  longitude    Decimal
+  Order        Order[]
+}
