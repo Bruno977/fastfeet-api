@@ -5,6 +5,7 @@ import { CpfAlreadyExistsError } from '../errors/cpf-already-exists';
 import { RoleProps } from 'src/core/types/role';
 import { Authorization } from '../../auth/authorization';
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
+import { Injectable } from '@nestjs/common';
 
 interface RegisterDeliveryManUseCaseRequest {
   name: string;
@@ -13,6 +14,7 @@ interface RegisterDeliveryManUseCaseRequest {
   role: RoleProps;
 }
 
+@Injectable()
 export class RegisterDeliveryManUseCase {
   constructor(
     private deliveryManRepository: DeliveryManRepository,

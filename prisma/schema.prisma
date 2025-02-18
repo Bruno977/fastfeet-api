@@ -31,7 +31,7 @@ model User {
   cpf      String  @unique
   name     String
   password String
-  role     Role
+  role     Role    @default(DELIVERY_MAN)
   Order    Order[]
 
   @@map("users")
@@ -46,6 +46,8 @@ model Order {
 
   recipientId  Recipient @relation(fields: [recipient_id], references: [id])
   recipient_id String
+
+  @@map("orders")
 }
 
 model Recipient {
@@ -61,4 +63,6 @@ model Recipient {
   latitude     Decimal
   longitude    Decimal
   Order        Order[]
+
+  @@map("recipient")
 }
