@@ -3,12 +3,14 @@ import { Authorization } from '../../auth/authorization';
 import { DeliveryManRepository } from '../../repositories/delivery-man-repository';
 import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error';
 import { RoleProps } from 'src/core/types/role';
+import { Injectable } from '@nestjs/common';
 
 interface DeleteDeliveryManUseCaseRequest {
   id: string;
   role: RoleProps;
 }
 
+@Injectable()
 export class DeleteDeliveryManUseCase {
   constructor(private deliveryManRepository: DeliveryManRepository) {}
   async execute({ id, role }: DeleteDeliveryManUseCaseRequest) {

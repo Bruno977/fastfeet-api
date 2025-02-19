@@ -9,6 +9,8 @@ import { UpdateDeliveryManController } from './controllers/delivery-man/update';
 import { UpdateDeliveryManUseCase } from 'src/domain/deliveries/application/use-cases/delivery-man/update-delivery-man';
 import { GetDeliveryManController } from './controllers/delivery-man/get';
 import { GetDeliveryManUseCase } from 'src/domain/deliveries/application/use-cases/delivery-man/get-delivery-man';
+import { DeleteDeliveryManController } from './controllers/delivery-man/delete';
+import { DeleteDeliveryManUseCase } from 'src/domain/deliveries/application/use-cases/delivery-man/delete-delivery-man';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -17,12 +19,14 @@ import { GetDeliveryManUseCase } from 'src/domain/deliveries/application/use-cas
     AuthenticateController,
     UpdateDeliveryManController,
     GetDeliveryManController,
+    DeleteDeliveryManController,
   ],
   providers: [
     RegisterDeliveryManUseCase,
     AuthenticateDeliveryManUseCase,
     UpdateDeliveryManUseCase,
     GetDeliveryManUseCase,
+    DeleteDeliveryManUseCase,
   ],
 })
 export class HttpModule {}
