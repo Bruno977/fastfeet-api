@@ -6,7 +6,6 @@ import { Encrypter } from 'src/domain/deliveries/application/cryptography/encryp
 export class JwtEncrypter implements Encrypter {
   constructor(private jwtService: JwtService) {}
   encrypt(payload: Record<string, unknown>): Promise<string> {
-    console.log('aqwui');
     return this.jwtService.signAsync(payload);
   }
 }
