@@ -3,12 +3,6 @@ import { PrismaService } from 'src/infra/database/prisma/prisma.service';
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
-import { DatabaseModule } from 'src/infra/database/database.module';
-import { CreateAccountController } from './create-account';
-import { RegisterDeliveryManUseCase } from 'src/domain/deliveries/application/use-cases/delivery-man/register-delivery-man';
-import { HttpModule } from '../http.module';
-import { CryptographyModule } from 'src/infra/cryptography/cryptography.module';
-import { AuthModule } from 'src/infra/auth/auth.module';
 
 describe('Create Account (E2E)', () => {
   let app: INestApplication;
@@ -16,26 +10,26 @@ describe('Create Account (E2E)', () => {
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [CryptographyModule],
+      imports: [AppModule],
     }).compile();
-    // console.log(moduleRef);
-    // app = moduleRef.createNestApplication();
-    // prisma = moduleRef.get(PrismaService);
-    // await app.init();
+    app = moduleRef.createNestApplication();
+    prisma = moduleRef.get(PrismaService);
+    await app.init();
   });
 
   it('[POST] /accounts', async () => {
-    // const response = await request(app.getHttpServer()).post('/accounts').send({
-    //   name: 'John Doe',
-    //   email: 'johndoe@example.com',
-    //   password: '123456',
-    // });
-    // expect(response.statusCode).toBe(201);
-    // const userOnDatabase = await prisma.user.findUnique({
-    //   where: {
-    //     email: 'johndoe@example.com',
-    //   },
-    // });
-    // expect(userOnDatabase).toBeTruthy();
+    const response = await request(app.getHttpServer()).post('/accounts').send({
+      name: 'John Doe',
+      cpf: '11111111111',
+      password: '123456',
+      role: 'ADMIN',
+    });
+    expect(response.statusCode).toBe(201);
+    const userOnDatabase = await prisma.user.findUnique({
+      where: {
+        cpf: '11111111111',
+      },
+    });
+    expect(userOnDatabase).toBeTruthy();
   });
 });
