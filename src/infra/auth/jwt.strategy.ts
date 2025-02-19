@@ -8,7 +8,7 @@ const tokenPayloadSchema = z.object({
   sub: z.string().uuid(),
   role: z.enum(['ADMIN', 'DELIVERY_MAN']),
 });
-export type TokenPayload = z.infer<typeof tokenPayloadSchema>;
+export type UserPayload = z.infer<typeof tokenPayloadSchema>;
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -20,7 +20,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       algorithms: ['RS256'],
     });
   }
-  async validate(payload: TokenPayload) {
+  async validate(payload: UserPayload) {
     return tokenPayloadSchema.parse(payload);
   }
 }
