@@ -3,11 +3,13 @@ import { DeliveryManRepository } from '../../repositories/delivery-man-repositor
 import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error';
 import { Authorization } from '../../auth/authorization';
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
+import { Injectable } from '@nestjs/common';
 
 interface GetDeliveryManUseCaseRequest {
   id: string;
   role: RoleProps;
 }
+@Injectable()
 export class GetDeliveryManUseCase {
   constructor(private deliveryManRepository: DeliveryManRepository) {}
   async execute({ id, role }: GetDeliveryManUseCaseRequest) {

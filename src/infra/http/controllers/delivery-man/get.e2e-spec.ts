@@ -7,7 +7,7 @@ import { makeDeliveryMan } from 'test/factories/makeDeliveryMan';
 import { PrismaDeliveryManMapper } from 'src/infra/database/prisma/mappers/prisma-delivery-man-mapper';
 import { JwtService } from '@nestjs/jwt';
 
-describe('Update User (E2E)', () => {
+describe('Get User (E2E)', () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let jwt: JwtService;
@@ -22,7 +22,7 @@ describe('Update User (E2E)', () => {
     await app.init();
   });
 
-  it('[PUT] /update-user/:id', async () => {
+  it('[GET] /user/:id', async () => {
     const deliveryMan = makeDeliveryMan();
     await prisma.user.create({
       data: PrismaDeliveryManMapper.toPrisma(deliveryMan),
@@ -32,18 +32,18 @@ describe('Update User (E2E)', () => {
       role: deliveryMan.role,
     });
     const response = await request(app.getHttpServer())
-      .put(`/update-user/${deliveryMan.id.toString()}`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        name: 'John Doe updated',
-      });
-    expect(response.statusCode).toBe(204);
+      .get(`/user/${deliveryMan.id.toString()}`)
+      .set('Authorization', `Bearer ${accessToken}`);
 
-    const deliveryManOnDatabase = await prisma.user.findFirst({
-      where: {
-        name: 'John Doe updated',
+    expect(response.statusCode).toBe(200);
+
+    expect(response.body).toEqual({
+      user: {
+        id: deliveryMan.id.toString(),
+        name: deliveryMan.name,
+        role: deliveryMan.role,
+        cpf: deliveryMan.cpf,
       },
     });
-    expect(deliveryManOnDatabase).toBeTruthy();
   });
 });
