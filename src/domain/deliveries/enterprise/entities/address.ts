@@ -1,6 +1,6 @@
 import { Entity } from 'src/core/entities/entity';
 
-interface AddressProps {
+export interface AddressProps {
   street: string;
   number: number;
   neighborhood: string;

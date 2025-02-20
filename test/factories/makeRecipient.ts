@@ -13,7 +13,7 @@ export function makeRecipient(
   const address = Address.create({
     city: faker.location.city(),
     neighborhood: faker.location.streetAddress(),
-    number: faker.location.buildingNumber(),
+    number: Number(faker.location.buildingNumber()),
     state: faker.location.state(),
     street: faker.location.street(),
     zipCode: faker.location.zipCode(),

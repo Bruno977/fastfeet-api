@@ -13,6 +13,8 @@ import { DeleteDeliveryManController } from './controllers/delivery-man/delete';
 import { DeleteDeliveryManUseCase } from 'src/domain/deliveries/application/use-cases/delivery-man/delete-delivery-man';
 import { CreateRecipientController } from './controllers/recipient/create';
 import { CreateRecipientUseCase } from 'src/domain/deliveries/application/use-cases/recipient/create-recipient';
+import { GetRecipientController } from './controllers/recipient/get';
+import { GetRecipientUseCase } from 'src/domain/deliveries/application/use-cases/recipient/get-recipient';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -23,6 +25,7 @@ import { CreateRecipientUseCase } from 'src/domain/deliveries/application/use-ca
     GetDeliveryManController,
     DeleteDeliveryManController,
     CreateRecipientController,
+    GetRecipientController,
   ],
   providers: [
     RegisterDeliveryManUseCase,
@@ -31,6 +34,7 @@ import { CreateRecipientUseCase } from 'src/domain/deliveries/application/use-ca
     GetDeliveryManUseCase,
     DeleteDeliveryManUseCase,
     CreateRecipientUseCase,
+    GetRecipientUseCase,
   ],
 })
 export class HttpModule {}
