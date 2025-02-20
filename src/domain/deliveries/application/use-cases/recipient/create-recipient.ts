@@ -5,6 +5,7 @@ import { Address } from 'src/domain/deliveries/enterprise/entities/address';
 import { Authorization } from '../../auth/authorization';
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 import { Injectable } from '@nestjs/common';
+import { CpfAlreadyExistsError } from '../errors/cpf-already-exists';
 
 interface CreateRecipientUseCaseProps {
   name: string;
@@ -39,6 +40,10 @@ export class CreateRecipientUseCase {
     const isAdmin = Authorization.hasPermission(role, 'create-recipient');
     if (!isAdmin) {
       throw new NotAllowedError();
+    }
+    const recipientExist = await this.recipientRepository.findByCpf(cpf);
+    if (recipientExist) {
+      throw new CpfAlreadyExistsError();
     }
 
     const address = Address.create({

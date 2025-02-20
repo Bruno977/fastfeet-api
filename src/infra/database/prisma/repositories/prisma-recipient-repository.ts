@@ -22,6 +22,17 @@ export class PrismaRecipientRepository implements RecipientRepository {
 
     return PrismaRecipientMapper.toDomain(recipient);
   }
+  async findByCpf(cpf: string): Promise<Recipient | null> {
+    const recipient = await this.prisma.recipient.findUnique({
+      where: { cpf },
+    });
+
+    if (!recipient) {
+      return null;
+    }
+
+    return PrismaRecipientMapper.toDomain(recipient);
+  }
   async update(order: Recipient): Promise<void> {
     const data = PrismaRecipientMapper.toPrisma(order);
     await this.prisma.recipient.update({

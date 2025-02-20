@@ -14,6 +14,10 @@ export class InMemoryRecipientRepository implements RecipientRepository {
     );
     return recipient || null;
   }
+  async findByCpf(cpf: string): Promise<Recipient | null> {
+    const recipient = this.recipients.find((r) => r.cpf.toString() === cpf);
+    return recipient || null;
+  }
   async update(recipient: Recipient): Promise<void> {
     const recipientIndex = this.recipients.findIndex(
       (r) => r.id.toString() === recipient.id.toString(),

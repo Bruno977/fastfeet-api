@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Body,
+  ConflictException,
   Controller,
   Post,
   UnauthorizedException,
@@ -11,6 +12,7 @@ import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 import { UserPayload } from 'src/infra/auth/jwt.strategy';
 import { CurrentUser } from 'src/infra/auth/current-user-decorator';
+import { CpfAlreadyExistsError } from 'src/domain/deliveries/application/use-cases/errors/cpf-already-exists';
 const createRecipientSchema = z.object({
   name: z.string(),
   cpf: z.string(),
@@ -56,6 +58,9 @@ export class CreateRecipientController {
     } catch (error) {
       if (error instanceof NotAllowedError) {
         throw new UnauthorizedException(error.message);
+      }
+      if (error instanceof CpfAlreadyExistsError) {
+        throw new ConflictException(error.message);
       }
 
       throw new BadRequestException();
