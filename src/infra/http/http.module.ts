@@ -15,6 +15,8 @@ import { CreateRecipientController } from './controllers/recipient/create';
 import { CreateRecipientUseCase } from 'src/domain/deliveries/application/use-cases/recipient/create-recipient';
 import { GetRecipientController } from './controllers/recipient/get';
 import { GetRecipientUseCase } from 'src/domain/deliveries/application/use-cases/recipient/get-recipient';
+import { UpdateRecipientController } from './controllers/recipient/update';
+import { UpdateRecipientUseCase } from 'src/domain/deliveries/application/use-cases/recipient/update-recipient';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -26,6 +28,7 @@ import { GetRecipientUseCase } from 'src/domain/deliveries/application/use-cases
     DeleteDeliveryManController,
     CreateRecipientController,
     GetRecipientController,
+    UpdateRecipientController,
   ],
   providers: [
     RegisterDeliveryManUseCase,
@@ -35,6 +38,7 @@ import { GetRecipientUseCase } from 'src/domain/deliveries/application/use-cases
     DeleteDeliveryManUseCase,
     CreateRecipientUseCase,
     GetRecipientUseCase,
+    UpdateRecipientUseCase,
   ],
 })
 export class HttpModule {}

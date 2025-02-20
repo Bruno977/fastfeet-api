@@ -3,6 +3,7 @@ import { RecipientRepository } from '../../repositories/recipient-repository';
 import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error';
 import { Authorization } from '../../auth/authorization';
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
+import { Injectable } from '@nestjs/common';
 
 interface UpdateRecipientUseCaseRequest {
   recipientId: string;
@@ -18,7 +19,7 @@ interface UpdateRecipientUseCaseRequest {
   longitude: number;
   role: RoleProps;
 }
-
+@Injectable()
 export class UpdateRecipientUseCase {
   constructor(private recipientRepository: RecipientRepository) {}
   async execute({
