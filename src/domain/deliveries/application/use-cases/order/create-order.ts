@@ -8,12 +8,14 @@ import { RecipientRepository } from '../../repositories/recipient-repository';
 import { RecipientNotFoundError } from '../errors/recipient-not-found-error';
 import { Authorization } from '../../auth/authorization';
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
+import { Injectable } from '@nestjs/common';
 interface CreateOrderUseCaseRequest {
   description: string;
   deliveryManId: string;
   recipientId: string;
   role: RoleProps;
 }
+@Injectable()
 export class CreateOrderUseCase {
   constructor(
     private orderRepository: OrderRepository,
