@@ -2,7 +2,7 @@ import { Entity } from 'src/core/entities/entity';
 
 interface AddressProps {
   street: string;
-  number: string;
+  number: number;
   neighborhood: string;
   city: string;
   state: string;
@@ -21,7 +21,7 @@ export class Address extends Entity<AddressProps> {
   get number() {
     return this.props.number;
   }
-  set number(value: string) {
+  set number(value: number) {
     this.props.number = value;
   }
   get neighborhood() {

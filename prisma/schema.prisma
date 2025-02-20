@@ -55,7 +55,7 @@ model Recipient {
   name         String
   cpf          String  @unique
   street       String
-  number       String
+  number       Int
   neighborhood String
   city         String
   state        String

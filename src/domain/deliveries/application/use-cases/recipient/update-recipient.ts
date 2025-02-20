@@ -9,7 +9,7 @@ interface UpdateRecipientUseCaseRequest {
   name: string;
   cpf: string;
   street: string;
-  number: string;
+  number: number;
   neighborhood: string;
   city: string;
   state: string;

@@ -4,12 +4,13 @@ import { Recipient } from 'src/domain/deliveries/enterprise/entities/recipient';
 import { Address } from 'src/domain/deliveries/enterprise/entities/address';
 import { Authorization } from '../../auth/authorization';
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
+import { Injectable } from '@nestjs/common';
 
 interface CreateRecipientUseCaseProps {
   name: string;
   cpf: string;
   street: string;
-  number: string;
+  number: number;
   neighborhood: string;
   city: string;
   state: string;
@@ -19,6 +20,7 @@ interface CreateRecipientUseCaseProps {
   role: RoleProps;
 }
 
+@Injectable()
 export class CreateRecipientUseCase {
   constructor(private recipientRepository: RecipientRepository) {}
   async execute({
