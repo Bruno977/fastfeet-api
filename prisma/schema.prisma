@@ -38,14 +38,17 @@ model User {
 }
 
 model Order {
-  id     String @id @default(uuid())
-  status Status
+  id          String @id @default(uuid())
+  description String
+  status      Status
 
   userId  User   @relation(fields: [user_id], references: [id])
   user_id String
 
   recipientId  Recipient @relation(fields: [recipient_id], references: [id])
   recipient_id String
+
+  attachment Attachment?
 
   @@map("orders")
 }
@@ -65,4 +68,15 @@ model Recipient {
   Order        Order[]
 
   @@map("recipient")
+}
+
+model Attachment {
+  id    String @id @default(uuid())
+  title String
+  url   String
+
+  Order   Order  @relation(fields: [orderId], references: [id])
+  orderId String @unique @map("order_id")
+
+  @@map("attachments")
 }

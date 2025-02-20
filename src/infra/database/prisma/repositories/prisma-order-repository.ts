@@ -5,28 +5,60 @@ import {
   updateOrderStatusProps,
 } from 'src/domain/deliveries/application/repositories/order-repository';
 import { Order } from 'src/domain/deliveries/enterprise/entities/order';
+import { PrismaService } from '../prisma.service';
+import { PrismaOrderMapper } from '../mappers/prisma-order-mapper';
 
 @Injectable()
 export class PrismaOrderRepository implements OrderRepository {
-  create(order: Order): Promise<void> {
-    throw new Error('Method not implemented.');
+  constructor(private prisma: PrismaService) {}
+  async create(order: Order): Promise<void> {
+    const data = PrismaOrderMapper.toPrisma(order);
+    await this.prisma.order.create({ data });
   }
-  findById(id: string): Promise<Order | null> {
-    throw new Error('Method not implemented.');
+  async findById(id: string): Promise<Order | null> {
+    const order = await this.prisma.order.findUnique({
+      where: { id },
+    });
+    if (!order) {
+      return null;
+    }
+    return PrismaOrderMapper.toDomain(order);
   }
-  delete(id: string): Promise<void> {
-    throw new Error('Method not implemented.');
+  async delete(id: string): Promise<void> {
+    await this.prisma.order.delete({ where: { id } });
   }
-  update(order: Order): Promise<void> {
-    throw new Error('Method not implemented.');
+  async update(order: Order): Promise<void> {
+    const data = PrismaOrderMapper.toPrisma(order);
+    await this.prisma.order.update({
+      where: { id: data.id },
+      data,
+    });
   }
-  updateOrderStatus(params: updateOrderStatusProps): Promise<void> {
-    throw new Error('Method not implemented.');
+  async updateOrderStatus(params: updateOrderStatusProps): Promise<void> {
+    await this.prisma.order.update({
+      where: { id: params.orderId },
+      data: {
+        status: params.status,
+        attachment: {
+          connect: {
+            id: params.attachmentId?.toString(),
+          },
+        },
+      },
+    });
   }
-  findAllByUser(id: string): Promise<Order[]> {
-    throw new Error('Method not implemented.');
+  async findAllByUser(id: string): Promise<Order[]> {
+    const orders = await this.prisma.order.findMany({
+      where: { id },
+    });
+    return orders.map((order) => PrismaOrderMapper.toDomain(order));
   }
-  findManyNearby(params: findManyNearbyProps): Promise<Order[]> {
-    throw new Error('Method not implemented.');
+  async findManyNearby(params: findManyNearbyProps): Promise<Order[]> {
+    const orders = await this.prisma.$queryRaw<Order[]>`
+    SELECT * from orders
+    WHERE ( 6371 * acos( cos( radians(${params.latitude}) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(${params.longitude}) ) + sin( radians(${params.latitude}) ) * sin( radians( latitude ) ) ) ) <= 10
+  `;
+
+    return orders;
   }
 }
