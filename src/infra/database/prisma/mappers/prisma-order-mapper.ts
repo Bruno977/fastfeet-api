@@ -15,7 +15,7 @@ export class PrismaOrderMapper {
   static toDomain(order: OrderPrisma): Order {
     return Order.create(
       {
-        deliveryManId: new UniqueEntityID(order.id),
+        deliveryManId: new UniqueEntityID(order.user_id),
         status: order.status,
         description: order.description,
         recipientId: new UniqueEntityID(order.recipient_id),
