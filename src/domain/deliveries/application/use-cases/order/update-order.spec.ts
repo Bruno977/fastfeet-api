@@ -36,7 +36,6 @@ describe('UpdateOrderUseCase', () => {
     await inMemoryRecipientRepository.create(newRecipient);
 
     await updateOrderUseCase.execute({
-      status: 'DELIVERED',
       description: 'description',
       orderId: newOrder.id.toString(),
       deliveryManId: newDeliveryMan.id.toString(),
@@ -48,7 +47,6 @@ describe('UpdateOrderUseCase', () => {
   it('should throw an error if the order does not exist', async () => {
     await expect(
       updateOrderUseCase.execute({
-        status: 'DELIVERED',
         description: 'description',
         orderId: '123',
         recipientId: '123',
@@ -62,7 +60,6 @@ describe('UpdateOrderUseCase', () => {
     await inMemoryOrderRepository.create(newOrder);
     await expect(
       updateOrderUseCase.execute({
-        status: 'DELIVERED',
         description: 'description',
         recipientId: '123',
         orderId: '123',
@@ -79,7 +76,6 @@ describe('UpdateOrderUseCase', () => {
     await inMemoryOrderRepository.create(newOrder);
     await expect(
       updateOrderUseCase.execute({
-        status: 'DELIVERED',
         description: 'description',
         orderId: newOrder.id.toString(),
         recipientId: '123',

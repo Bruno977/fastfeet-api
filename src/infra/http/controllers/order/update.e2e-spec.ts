@@ -54,7 +54,6 @@ describe('Update Order (E2E)', () => {
         description: 'Description',
         user_id: deliveryMan.id.toString(),
         recipient_id: recipient.id.toString(),
-        status: 'AWAITING_PICKUP',
       });
     expect(response.statusCode).toBe(204);
 

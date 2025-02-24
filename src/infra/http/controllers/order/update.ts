@@ -22,13 +22,6 @@ const updateOrderSchema = z.object({
   description: z.string(),
   user_id: z.string().uuid(),
   recipient_id: z.string().uuid(),
-  status: z.enum([
-    'NEW',
-    'AWAITING_PICKUP',
-    'PICKED_UP',
-    'DELIVERED',
-    'RETURNED',
-  ]),
 });
 
 const bodyValidationPipe = new ZodValidationPipe(updateOrderSchema);
@@ -45,7 +38,7 @@ export class UpdateOrderController {
     @CurrentUser() user: UserPayload,
     @Param('id') orderId: string,
   ) {
-    const { description, recipient_id, status, user_id } = body;
+    const { description, recipient_id, user_id } = body;
 
     const currentUserRole = user.role;
 
@@ -53,7 +46,6 @@ export class UpdateOrderController {
       await this.updateOrder.execute({
         orderId,
         role: currentUserRole,
-        status,
         description,
         deliveryManId: user_id,
         recipientId: recipient_id,

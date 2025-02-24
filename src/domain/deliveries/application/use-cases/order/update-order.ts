@@ -2,7 +2,6 @@ import { UniqueEntityID } from './../../../../../core/entities/unique-entity-id'
 import { RoleProps } from 'src/core/types/role';
 import { OrderRepository } from '../../repositories/order-repository';
 import { ResourceNotFoundError } from 'src/core/errors/resource-not-found-error';
-import { ORDER_STATUS } from 'src/core/types/orderStatus';
 import { DeliveryManRepository } from '../../repositories/delivery-man-repository';
 import { DeliveryManNotFoundError } from '../errors/delivery-man-not-found-error';
 import { RecipientRepository } from '../../repositories/recipient-repository';
@@ -14,7 +13,6 @@ import { Injectable } from '@nestjs/common';
 interface UpdateOrderUseCaseRequest {
   orderId: string;
   role: RoleProps;
-  status: ORDER_STATUS;
   description: string;
   deliveryManId: string;
   recipientId: string;
@@ -30,7 +28,6 @@ export class UpdateOrderUseCase {
   async execute({
     orderId,
     role,
-    status,
     description,
     deliveryManId,
     recipientId,
@@ -52,7 +49,6 @@ export class UpdateOrderUseCase {
     if (!recipient) {
       throw new RecipientNotFoundError();
     }
-    order.status = status;
     order.description = description;
     order.deliveryManId = new UniqueEntityID(deliveryManId);
     order.recipientId = new UniqueEntityID(recipientId);
