@@ -11,7 +11,7 @@ import { PrismaOrderMapper } from 'src/infra/database/prisma/mappers/prisma-orde
 import { makeRecipient } from 'test/factories/makeRecipient';
 import { PrismaRecipientMapper } from 'src/infra/database/prisma/mappers/prisma-recipient-mapper';
 
-describe('Get Order (E2E)', () => {
+describe('Get Order Nearby (E2E)', () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let jwt: JwtService;
@@ -26,42 +26,77 @@ describe('Get Order (E2E)', () => {
     await app.init();
   });
 
-  it('[GET] /orders/:id', async () => {
+  it('[GET] /orders/nearby', async () => {
     const deliveryMan = makeDeliveryMan();
 
-    const recipient = makeRecipient();
+    const recipient1 = makeRecipient({
+      cpf: '123123',
+    });
+    const recipient2 = makeRecipient({
+      cpf: '456456',
+    });
+
+    recipient1.address.latitude = -22.92445;
+    recipient1.address.longitude = -43.171343;
+
+    recipient2.address.latitude = -23.000143;
+    recipient2.address.longitude = -43.269481;
+
     await prisma.user.create({
       data: PrismaDeliveryManMapper.toPrisma(deliveryMan),
     });
     await prisma.recipient.create({
-      data: PrismaRecipientMapper.toPrisma(recipient),
+      data: PrismaRecipientMapper.toPrisma(recipient1),
     });
-    const order = makeOrder({
-      recipientId: recipient.id,
-      deliveryManId: deliveryMan.id,
+    await prisma.recipient.create({
+      data: PrismaRecipientMapper.toPrisma(recipient2),
+    });
+
+    await prisma.order.create({
+      data: PrismaOrderMapper.toPrisma(
+        makeOrder({
+          recipientId: recipient1.id,
+          deliveryManId: deliveryMan.id,
+        }),
+      ),
     });
     await prisma.order.create({
-      data: PrismaOrderMapper.toPrisma(order),
+      data: PrismaOrderMapper.toPrisma(
+        makeOrder({
+          recipientId: recipient1.id,
+          deliveryManId: deliveryMan.id,
+        }),
+      ),
+    });
+    await prisma.order.create({
+      data: PrismaOrderMapper.toPrisma(
+        makeOrder({
+          recipientId: recipient2.id,
+          deliveryManId: deliveryMan.id,
+        }),
+      ),
     });
     const accessToken = jwt.sign({
       sub: deliveryMan.id.toString(),
       role: deliveryMan.role,
     });
     const response = await request(app.getHttpServer())
-      .get(`/order/${order.id.toString()}`)
+      .get(`/orders/nearby?latitude=-22.932381&longitude=-43.173639`)
       .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(200);
 
     expect(response.body).toEqual(
       expect.objectContaining({
-        order: {
-          id: order.id.toString(),
-          description: order.description,
-          status: order.status,
-          user_id: deliveryMan.id.toString(),
-          recipient_id: recipient.id.toString(),
-        },
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        orders: expect.arrayContaining([
+          expect.objectContaining({
+            recipient_id: recipient1.id.toString(),
+          }),
+          expect.objectContaining({
+            recipient_id: recipient1.id.toString(),
+          }),
+        ]),
       }),
     );
   });

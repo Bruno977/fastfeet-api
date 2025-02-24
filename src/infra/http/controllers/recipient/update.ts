@@ -65,7 +65,6 @@ export class UpdateRecipientController {
         role: currentUserRole,
       });
     } catch (error) {
-      console.log(error);
       if (error instanceof NotAllowedError) {
         throw new UnauthorizedException(error.message);
       }

@@ -41,7 +41,6 @@ export class CreateOrderController {
         role: role,
       });
     } catch (error) {
-      console.log('Error', error);
       if (error instanceof NotAllowedError) {
         throw new UnauthorizedException(error.message);
       }

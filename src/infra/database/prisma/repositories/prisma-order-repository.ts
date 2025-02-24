@@ -7,6 +7,7 @@ import {
 import { Order } from 'src/domain/deliveries/enterprise/entities/order';
 import { PrismaService } from '../prisma.service';
 import { PrismaOrderMapper } from '../mappers/prisma-order-mapper';
+import { Prisma, Recipient as RecipientPrisma } from '@prisma/client';
 
 @Injectable()
 export class PrismaOrderRepository implements OrderRepository {
@@ -47,18 +48,36 @@ export class PrismaOrderRepository implements OrderRepository {
       },
     });
   }
-  async findAllByUser(id: string): Promise<Order[]> {
+  async findAllByUser(userId: string): Promise<Order[]> {
     const orders = await this.prisma.order.findMany({
-      where: { id },
+      where: { user_id: userId },
     });
     return orders.map((order) => PrismaOrderMapper.toDomain(order));
   }
   async findManyNearby(params: findManyNearbyProps): Promise<Order[]> {
-    const orders = await this.prisma.$queryRaw<Order[]>`
-    SELECT * from orders
-    WHERE ( 6371 * acos( cos( radians(${params.latitude}) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(${params.longitude}) ) + sin( radians(${params.latitude}) ) * sin( radians( latitude ) ) ) ) <= 10
-  `;
+    const latitude = Number(params.latitude);
+    const longitude = Number(params.longitude);
+    const userOrders = params.orders.map((order) =>
+      PrismaOrderMapper.toPrisma(order),
+    );
+    const recipientIds = [
+      ...new Set(userOrders.map((order) => order.recipient_id)),
+    ];
 
-    return orders;
+    const nearbyRecipients = await this.prisma.$queryRaw<RecipientPrisma[]>`
+      SELECT id FROM recipient
+      WHERE id IN (${Prisma.join(recipientIds)})
+      AND ( 6371 * acos( cos( radians(${latitude}) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(${longitude}) ) + sin( radians(${latitude}) ) * sin( radians( latitude ) ) ) ) <= 10
+    `;
+
+    const nearbyRecipientIds = nearbyRecipients.map(
+      (recipient) => recipient.id,
+    );
+
+    const nearbyOrders = userOrders.filter((order) =>
+      nearbyRecipientIds.includes(order.recipient_id),
+    );
+
+    return nearbyOrders.map((order) => PrismaOrderMapper.toDomain(order));
   }
 }

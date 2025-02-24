@@ -51,7 +51,6 @@ export class UpdateOrderController {
         recipientId: recipient_id,
       });
     } catch (error) {
-      console.log(error);
       if (error instanceof NotAllowedError) {
         throw new UnauthorizedException(error.message);
       }

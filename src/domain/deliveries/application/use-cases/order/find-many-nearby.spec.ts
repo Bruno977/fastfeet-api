@@ -58,13 +58,14 @@ describe('Fetch Nearby Order Use Case', () => {
       }),
     );
 
-    const { order } = await findManyNearbyUseCase.execute({
+    const { orders } = await findManyNearbyUseCase.execute({
       deliveryManLatitude: -22.932381,
       deliveryManLongitude: -43.173639,
       deliveryManId: newDeliveryMan.id.toString(),
     });
-    expect(order).toHaveLength(2);
-    expect(order).toEqual([
+    expect(orders).toHaveLength(2);
+
+    expect(orders).toEqual([
       expect.objectContaining({ description: 'description' }),
       expect.objectContaining({ description: 'description 2' }),
     ]);

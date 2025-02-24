@@ -1,6 +1,7 @@
 import { DeliveryManRepository } from 'src/domain/deliveries/application/repositories/delivery-man-repository';
 import { OrderRepository } from '../../repositories/order-repository';
-import { DeliveryManNotFoundError } from '../errors/delivery-man-not-found-error';
+import { NotAllowedError } from 'src/core/errors/not-allowed-error';
+import { Injectable } from '@nestjs/common';
 
 interface findManyNearbyUseCaseProps {
   deliveryManLatitude: number;
@@ -8,6 +9,7 @@ interface findManyNearbyUseCaseProps {
   deliveryManId: string;
 }
 
+@Injectable()
 export class FindManyNearbyUseCase {
   constructor(
     private orderRepository: OrderRepository,
@@ -21,13 +23,18 @@ export class FindManyNearbyUseCase {
   }: findManyNearbyUseCaseProps) {
     const deliveryMan =
       await this.deliveryManRepository.findById(deliveryManId);
+
     if (!deliveryMan) {
-      throw new DeliveryManNotFoundError();
+      throw new NotAllowedError();
     }
     const ordersDeliveryMan =
       await this.orderRepository.findAllByUser(deliveryManId);
 
-    const order = await this.orderRepository.findManyNearby({
+    // if (!ordersDeliveryMan) {
+    //   return [];
+    // }
+
+    const orders = await this.orderRepository.findManyNearby({
       deliveryManId,
       latitude: deliveryManLatitude,
       longitude: deliveryManLongitude,
@@ -35,7 +42,7 @@ export class FindManyNearbyUseCase {
     });
 
     return {
-      order,
+      orders,
     };
   }
 }
