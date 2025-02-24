@@ -29,6 +29,8 @@ import { UpdateOrderController } from './controllers/order/update';
 import { UpdateOrderUseCase } from 'src/domain/deliveries/application/use-cases/order/update-order';
 import { FindManyNearbyUseCase } from 'src/domain/deliveries/application/use-cases/order/find-many-nearby';
 import { findManyNearbyController } from './controllers/order/nearby';
+import { GetOrderByUserUseCase } from 'src/domain/deliveries/application/use-cases/order/get-order-by-user';
+import { GetByUserController } from './controllers/order/get-by-user';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -47,6 +49,7 @@ import { findManyNearbyController } from './controllers/order/nearby';
     DeleteOrderController,
     UpdateOrderController,
     findManyNearbyController,
+    GetByUserController,
   ],
   providers: [
     RegisterDeliveryManUseCase,
@@ -63,6 +66,7 @@ import { findManyNearbyController } from './controllers/order/nearby';
     DeleteOrderUseCase,
     UpdateOrderUseCase,
     FindManyNearbyUseCase,
+    GetOrderByUserUseCase,
   ],
 })
 export class HttpModule {}

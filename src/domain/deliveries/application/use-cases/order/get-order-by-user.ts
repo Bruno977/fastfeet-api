@@ -2,12 +2,14 @@ import { OrderRepository } from '../../repositories/order-repository';
 import { DeliveryManRepository } from '../../repositories/delivery-man-repository';
 import { DeliveryManNotFoundError } from '../errors/delivery-man-not-found-error';
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
+import { Injectable } from '@nestjs/common';
 
 interface GetOrderByUserUseCaseRequest {
   deliveryManId: string;
   currentUserId: string;
 }
 
+@Injectable()
 export class GetOrderByUserUseCase {
   constructor(
     private orderRepository: OrderRepository,
