@@ -9,6 +9,7 @@ import { RecipientRepository } from '../../repositories/recipient-repository';
 import { RecipientNotFoundError } from '../errors/recipient-not-found-error';
 import { Authorization } from '../../auth/authorization';
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
+import { Injectable } from '@nestjs/common';
 
 interface UpdateOrderUseCaseRequest {
   orderId: string;
@@ -19,6 +20,7 @@ interface UpdateOrderUseCaseRequest {
   recipientId: string;
 }
 
+@Injectable()
 export class UpdateOrderUseCase {
   constructor(
     private orderRepository: OrderRepository,
