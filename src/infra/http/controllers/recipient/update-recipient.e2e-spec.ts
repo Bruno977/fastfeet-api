@@ -25,7 +25,7 @@ describe('Update Recipient (E2E)', () => {
     await app.init();
   });
 
-  it('[PUT] /update-recipient/:id', async () => {
+  it('[PUT] /recipient/:id', async () => {
     const deliveryMan = makeDeliveryMan();
     const recipient = makeRecipient();
     await prisma.user.create({
@@ -39,7 +39,7 @@ describe('Update Recipient (E2E)', () => {
       role: deliveryMan.role,
     });
     const response = await request(app.getHttpServer())
-      .put(`/update-recipient/${recipient.id.toString()}`)
+      .put(`/recipient/${recipient.id.toString()}`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         cpf: '123123123123',

@@ -34,7 +34,7 @@ const updateRecipientSchema = z.object({
 const bodyValidationPipe = new ZodValidationPipe(updateRecipientSchema);
 type UpdateRecipientSchema = z.infer<typeof updateRecipientSchema>;
 
-@Controller('/update-recipient/:id')
+@Controller('/recipient/:id')
 export class UpdateRecipientController {
   constructor(private updateRecipient: UpdateRecipientUseCase) {}
 

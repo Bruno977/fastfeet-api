@@ -11,13 +11,13 @@ import { GetDeliveryManController } from './controllers/delivery-man/get-deliver
 import { GetDeliveryManUseCase } from 'src/domain/deliveries/application/use-cases/delivery-man/get-delivery-man';
 import { DeleteDeliveryManController } from './controllers/delivery-man/delete-delivery-man';
 import { DeleteDeliveryManUseCase } from 'src/domain/deliveries/application/use-cases/delivery-man/delete-delivery-man';
-import { CreateRecipientController } from './controllers/recipient/create';
+import { CreateRecipientController } from './controllers/recipient/create-recipient';
 import { CreateRecipientUseCase } from 'src/domain/deliveries/application/use-cases/recipient/create-recipient';
-import { GetRecipientController } from './controllers/recipient/get';
+import { GetRecipientController } from './controllers/recipient/get-recipient';
 import { GetRecipientUseCase } from 'src/domain/deliveries/application/use-cases/recipient/get-recipient';
-import { UpdateRecipientController } from './controllers/recipient/update';
+import { UpdateRecipientController } from './controllers/recipient/update-recipient';
 import { UpdateRecipientUseCase } from 'src/domain/deliveries/application/use-cases/recipient/update-recipient';
-import { DeleteRecipientController } from './controllers/recipient/delete';
+import { DeleteRecipientController } from './controllers/recipient/delete-recipient';
 import { DeleteRecipientUseCase } from 'src/domain/deliveries/application/use-cases/recipient/delete-recipient';
 import { CreateOrderController } from './controllers/order/create-order';
 import { CreateOrderUseCase } from 'src/domain/deliveries/application/use-cases/order/create-order';
