@@ -19,6 +19,7 @@ describe('UploadAndCreateAttachmentUseCase', () => {
       fileName: 'test.jpg',
       fileType: 'image/jpeg',
       body: Buffer.from(''),
+      orderId: 'order-id',
     };
     const response =
       await uploadAndCreateAttachmentUseCase.execute(newAttachment);

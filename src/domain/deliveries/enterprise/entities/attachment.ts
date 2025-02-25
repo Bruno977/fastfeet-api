@@ -4,9 +4,16 @@ import { UniqueEntityID } from 'src/core/entities/unique-entity-id';
 export interface AttachmentProps {
   title: string;
   url: string;
+  orderId: UniqueEntityID;
 }
 
 export class Attachment extends Entity<AttachmentProps> {
+  get orderId() {
+    return this.props.orderId;
+  }
+  set orderId(value: UniqueEntityID) {
+    this.props.orderId = value;
+  }
   get title() {
     return this.props.title;
   }
