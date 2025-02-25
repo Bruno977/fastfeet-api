@@ -36,7 +36,6 @@ export class DeliverOrderController {
     @CurrentUser() user: UserPayload,
   ) {
     const { sub } = user;
-    console.log('FIleControler', file);
     try {
       await this.deliverOrderUseCase.execute({
         body: file.buffer,

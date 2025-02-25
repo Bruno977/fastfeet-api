@@ -19,18 +19,18 @@ import { UpdateRecipientController } from './controllers/recipient/update';
 import { UpdateRecipientUseCase } from 'src/domain/deliveries/application/use-cases/recipient/update-recipient';
 import { DeleteRecipientController } from './controllers/recipient/delete';
 import { DeleteRecipientUseCase } from 'src/domain/deliveries/application/use-cases/recipient/delete-recipient';
-import { CreateOrderController } from './controllers/order/create';
+import { CreateOrderController } from './controllers/order/create-order';
 import { CreateOrderUseCase } from 'src/domain/deliveries/application/use-cases/order/create-order';
-import { GetOrderController } from './controllers/order/get';
+import { GetOrderController } from './controllers/order/get-order';
 import { GetOrderUseCase } from 'src/domain/deliveries/application/use-cases/order/get-order';
-import { DeleteOrderController } from './controllers/order/delete';
+import { DeleteOrderController } from './controllers/order/delete-order';
 import { DeleteOrderUseCase } from 'src/domain/deliveries/application/use-cases/order/delete-order';
-import { UpdateOrderController } from './controllers/order/update';
+import { UpdateOrderController } from './controllers/order/update-order';
 import { UpdateOrderUseCase } from 'src/domain/deliveries/application/use-cases/order/update-order';
 import { FindManyNearbyUseCase } from 'src/domain/deliveries/application/use-cases/order/find-many-nearby';
-import { findManyNearbyController } from './controllers/order/nearby';
+import { GetOrdersNearbyController } from './controllers/order/get-orders-nearby';
 import { GetOrderByUserUseCase } from 'src/domain/deliveries/application/use-cases/order/get-order-by-user';
-import { GetByUserController } from './controllers/order/get-by-user';
+import { GetOrdersByUserController } from './controllers/order/get-order-by-user';
 import { StorageModule } from '../storage/storage.module';
 import { DeliverOrderController } from './controllers/order/deliver-order';
 import { DeliverOrderUseCase } from 'src/domain/deliveries/application/use-cases/order/deliver-order';
@@ -52,8 +52,8 @@ import { UpdateOrderStatusUseCase } from 'src/domain/deliveries/application/use-
     GetOrderController,
     DeleteOrderController,
     UpdateOrderController,
-    findManyNearbyController,
-    GetByUserController,
+    GetOrdersNearbyController,
+    GetOrdersByUserController,
     DeliverOrderController,
     UpdateOrderStatusController,
   ],

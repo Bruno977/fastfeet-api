@@ -27,7 +27,7 @@ const updateOrderSchema = z.object({
 const bodyValidationPipe = new ZodValidationPipe(updateOrderSchema);
 type UpdateOrderSchema = z.infer<typeof updateOrderSchema>;
 
-@Controller('/update-order/:id')
+@Controller('/order/:id')
 export class UpdateOrderController {
   constructor(private updateOrder: UpdateOrderUseCase) {}
 

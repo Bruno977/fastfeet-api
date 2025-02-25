@@ -27,7 +27,7 @@ type CoordinatesSchema = z.infer<typeof coordinatesSchema>;
 const queryValidationPipe = new ZodValidationPipe(coordinatesSchema);
 
 @Controller('/orders/nearby')
-export class findManyNearbyController {
+export class GetOrdersNearbyController {
   constructor(private findManyNearbyUseCase: FindManyNearbyUseCase) {}
   @Get()
   async handle(

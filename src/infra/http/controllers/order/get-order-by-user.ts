@@ -6,7 +6,7 @@ import {
   Param,
   UnauthorizedException,
 } from '@nestjs/common';
-import { GetOrderByUserUseCase } from './../../../../domain/deliveries/application/use-cases/order/get-order-by-user';
+import { GetOrderByUserUseCase } from '../../../../domain/deliveries/application/use-cases/order/get-order-by-user';
 import { CurrentUser } from 'src/infra/auth/current-user-decorator';
 import { UserPayload } from 'src/infra/auth/jwt.strategy';
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
@@ -14,7 +14,7 @@ import { DeliveryManNotFoundError } from 'src/domain/deliveries/application/use-
 import { OrderPresenter } from '../../presenters/order-presenter';
 
 @Controller('/users/:id/orders')
-export class GetByUserController {
+export class GetOrdersByUserController {
   constructor(private getOrderByUser: GetOrderByUserUseCase) {}
   @Get()
   async handle(@Param('id') userId: string, @CurrentUser() user: UserPayload) {
