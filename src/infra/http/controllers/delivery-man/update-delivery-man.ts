@@ -25,7 +25,7 @@ const updateDeliveryManSchema = z.object({
 const bodyValidationPipe = new ZodValidationPipe(updateDeliveryManSchema);
 type UpdateDeliveryManSchema = z.infer<typeof updateDeliveryManSchema>;
 
-@Controller('/update-user/:id')
+@Controller('/user/:id')
 export class UpdateDeliveryManController {
   constructor(private updateDeliveryMan: UpdateDeliveryManUseCase) {}
 
