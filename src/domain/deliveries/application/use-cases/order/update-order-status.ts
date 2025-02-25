@@ -5,17 +5,15 @@ import { DeliveryManNotFoundError } from '../errors/delivery-man-not-found-error
 import { DeliveryManRepository } from '../../repositories/delivery-man-repository';
 import { RoleProps } from 'src/core/types/role';
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
-import { AttachmentRequiredError } from '../errors/attachment-required-error';
-import { UniqueEntityID } from 'src/core/entities/unique-entity-id';
+import { Injectable } from '@nestjs/common';
 
 interface UpdateOrderStatusUseCaseRequest {
   orderId: string;
   deliveryManId: string;
-  attachmentId?: string | null;
   status: ORDER_STATUS;
   role: RoleProps;
 }
-
+@Injectable()
 export class UpdateOrderStatusUseCase {
   constructor(
     private orderRepository: OrderRepository,
@@ -25,7 +23,6 @@ export class UpdateOrderStatusUseCase {
   async execute({
     deliveryManId,
     orderId,
-    attachmentId = null,
     status,
     role,
   }: UpdateOrderStatusUseCaseRequest) {
@@ -42,20 +39,16 @@ export class UpdateOrderStatusUseCase {
       throw new NotAllowedError();
     }
     const isSameDeliveryMan = order.deliveryManId.toString() === deliveryManId;
-    if (status === 'DELIVERED' && !isSameDeliveryMan) {
+    if (!isSameDeliveryMan) {
       throw new NotAllowedError();
     }
-    if (status === 'DELIVERED' && !attachmentId) {
-      throw new AttachmentRequiredError();
+    if (status === 'DELIVERED') {
+      throw new NotAllowedError();
     }
-    const newAttachmentId = attachmentId
-      ? new UniqueEntityID(attachmentId)
-      : null;
 
     await this.orderRepository.updateOrderStatus({
       orderId,
       status,
-      attachmentId: newAttachmentId,
     });
   }
 }

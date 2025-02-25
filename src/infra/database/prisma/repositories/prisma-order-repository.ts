@@ -40,11 +40,6 @@ export class PrismaOrderRepository implements OrderRepository {
       where: { id: params.orderId },
       data: {
         status: params.status,
-        attachment: {
-          connect: {
-            id: params.attachmentId?.toString(),
-          },
-        },
       },
     });
   }

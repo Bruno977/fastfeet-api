@@ -28,15 +28,10 @@ export class InMemoryOrderRepository implements OrderRepository {
       o.id.toString() === order.id.toString() ? order : o,
     );
   }
-  async updateOrderStatus({
-    orderId,
-    status,
-    attachmentId,
-  }: updateOrderStatusProps) {
+  async updateOrderStatus({ orderId, status }: updateOrderStatusProps) {
     this.order = this.order.map((order) => {
       if (order.id.toString() === orderId) {
         order.status = status;
-        order.attachmentId = attachmentId;
       }
       return order;
     });

@@ -1,11 +1,9 @@
 import { ORDER_STATUS } from 'src/core/types/orderStatus';
 import { Order } from '../../enterprise/entities/order';
-import { UniqueEntityID } from 'src/core/entities/unique-entity-id';
 
 export interface updateOrderStatusProps {
   orderId: string;
   status: ORDER_STATUS;
-  attachmentId: UniqueEntityID | null;
 }
 export interface findManyNearbyProps {
   latitude: number;

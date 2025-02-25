@@ -34,6 +34,8 @@ import { GetByUserController } from './controllers/order/get-by-user';
 import { StorageModule } from '../storage/storage.module';
 import { DeliverOrderController } from './controllers/order/deliver-order';
 import { DeliverOrderUseCase } from 'src/domain/deliveries/application/use-cases/order/deliver-order';
+import { UpdateOrderStatusController } from './controllers/order/update-order-status';
+import { UpdateOrderStatusUseCase } from 'src/domain/deliveries/application/use-cases/order/update-order-status';
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
   controllers: [
@@ -53,6 +55,7 @@ import { DeliverOrderUseCase } from 'src/domain/deliveries/application/use-cases
     findManyNearbyController,
     GetByUserController,
     DeliverOrderController,
+    UpdateOrderStatusController,
   ],
   providers: [
     RegisterDeliveryManUseCase,
@@ -71,6 +74,7 @@ import { DeliverOrderUseCase } from 'src/domain/deliveries/application/use-cases
     FindManyNearbyUseCase,
     GetOrderByUserUseCase,
     DeliverOrderUseCase,
+    UpdateOrderStatusUseCase,
   ],
 })
 export class HttpModule {}
