@@ -5,16 +5,19 @@ type RouteProps =
   | 'register-delivery-man'
   | 'update-delivery-man'
   | 'get-delivery-man'
+  | 'get-all-delivery-man'
   | 'create-order'
   | 'delete-order'
   | 'get-order-by-user'
   | 'get-order'
   | 'update-order-status'
   | 'update-order'
+  | 'get-all-orders'
   | 'create-recipient'
   | 'delete-recipient'
   | 'get-recipient'
-  | 'update-recipient';
+  | 'update-recipient'
+  | 'get-all-recipients';
 
 export class Authorization {
   private static rolePermissions: Record<RoleProps, RouteProps[]> = {
@@ -24,6 +27,7 @@ export class Authorization {
       'register-delivery-man',
       'update-delivery-man',
       'get-delivery-man',
+      'get-all-delivery-man',
       //Routes Order
       'create-order',
       'delete-order',
@@ -31,11 +35,13 @@ export class Authorization {
       'get-order',
       'update-order-status',
       'update-order',
+      'get-all-orders',
       //Routes Recipient
       'create-recipient',
       'delete-recipient',
       'get-recipient',
       'update-recipient',
+      'get-all-recipients',
     ],
     DELIVERY_MAN: [],
   };

@@ -42,6 +42,9 @@ export class InMemoryOrderRepository implements OrderRepository {
     );
     return order;
   }
+  async findMany(): Promise<Order[]> {
+    return this.order;
+  }
   async findManyNearby(params: findManyNearbyProps) {
     const nearbyOrders: Order[] = [];
 

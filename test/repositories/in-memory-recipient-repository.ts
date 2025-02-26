@@ -24,6 +24,9 @@ export class InMemoryRecipientRepository implements RecipientRepository {
     );
     this.recipients[recipientIndex] = recipient;
   }
+  async findMany(): Promise<Recipient[]> {
+    return this.recipients;
+  }
   async delete(id: string) {
     this.recipients = this.recipients.filter(
       (recipient) => recipient.id.toString() !== id,

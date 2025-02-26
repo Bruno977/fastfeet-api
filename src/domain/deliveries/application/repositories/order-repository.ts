@@ -19,5 +19,6 @@ export abstract class OrderRepository {
   abstract update(order: Order): Promise<void>;
   abstract updateOrderStatus(params: updateOrderStatusProps): Promise<void>;
   abstract findAllByUser(id: string): Promise<Order[]>;
+  abstract findMany(): Promise<Order[]>;
   abstract findManyNearby(params: findManyNearbyProps): Promise<Order[]>;
 }

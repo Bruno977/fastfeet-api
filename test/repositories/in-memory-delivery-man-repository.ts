@@ -19,6 +19,9 @@ export class InMemoryDeliveryManRepository implements DeliveryManRepository {
       ) || null;
     return deliveryMan;
   }
+  async findMany(): Promise<DeliveryMan[]> {
+    return this.deliveryMan;
+  }
   async update(deliveryMan: DeliveryMan) {
     const index = this.deliveryMan.findIndex(
       (deliveryMan) => deliveryMan.id === deliveryMan.id,
