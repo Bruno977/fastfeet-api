@@ -2,10 +2,12 @@ import { RoleProps } from 'src/core/types/role';
 import { Authorization } from '../../auth/authorization';
 import { NotAllowedError } from 'src/core/errors/not-allowed-error';
 import { RecipientRepository } from '../../repositories/recipient-repository';
+import { Injectable } from '@nestjs/common';
 
 interface GetAllRecipientsRequest {
   role: RoleProps;
 }
+@Injectable()
 export class GetAllRecipientsUseCase {
   constructor(private recipientRepository: RecipientRepository) {}
   async execute({ role }: GetAllRecipientsRequest) {

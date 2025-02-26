@@ -1,15 +1,15 @@
 import { InMemoryDeliveryManRepository } from '../../../../../../test/repositories/in-memory-delivery-man-repository';
-import { GetAllDeliveryMen } from './get-all-delivery-man';
+import { GetAllDeliveryMenUseCase } from './get-all-delivery-man';
 import { makeDeliveryMan } from 'test/factories/makeDeliveryMan';
 
 let iMemoryDeliveryManRepository: InMemoryDeliveryManRepository;
-let getAllDeliveryMenUseCase: GetAllDeliveryMen;
+let getAllDeliveryMenUseCase: GetAllDeliveryMenUseCase;
 
 describe('GetAllDeliveryMen', () => {
   beforeEach(() => {
     iMemoryDeliveryManRepository = new InMemoryDeliveryManRepository();
 
-    getAllDeliveryMenUseCase = new GetAllDeliveryMen(
+    getAllDeliveryMenUseCase = new GetAllDeliveryMenUseCase(
       iMemoryDeliveryManRepository,
     );
   });

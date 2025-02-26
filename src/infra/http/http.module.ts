@@ -36,6 +36,12 @@ import { DeliverOrderController } from './controllers/order/deliver-order';
 import { DeliverOrderUseCase } from 'src/domain/deliveries/application/use-cases/order/deliver-order';
 import { UpdateOrderStatusController } from './controllers/order/update-order-status';
 import { UpdateOrderStatusUseCase } from 'src/domain/deliveries/application/use-cases/order/update-order-status';
+import { GetAllDeliveryMenController } from './controllers/delivery-man/get-all-delivery-man';
+import { GetAllDeliveryMenUseCase } from 'src/domain/deliveries/application/use-cases/delivery-man/get-all-delivery-man';
+import { GetAllOrdersController } from './controllers/order/get-all-orders';
+import { GetAllOrdersUseCase } from 'src/domain/deliveries/application/use-cases/order/get-all-orders';
+import { GetAllRecipientsController } from './controllers/recipient/get-all-recipients';
+import { GetAllRecipientsUseCase } from 'src/domain/deliveries/application/use-cases/recipient/get-all-recipients';
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
   controllers: [
@@ -44,10 +50,12 @@ import { UpdateOrderStatusUseCase } from 'src/domain/deliveries/application/use-
     UpdateDeliveryManController,
     GetDeliveryManController,
     DeleteDeliveryManController,
+    GetAllDeliveryMenController,
     CreateRecipientController,
     GetRecipientController,
     UpdateRecipientController,
     DeleteRecipientController,
+    GetAllRecipientsController,
     CreateOrderController,
     GetOrderController,
     DeleteOrderController,
@@ -56,6 +64,7 @@ import { UpdateOrderStatusUseCase } from 'src/domain/deliveries/application/use-
     GetOrdersByUserController,
     DeliverOrderController,
     UpdateOrderStatusController,
+    GetAllOrdersController,
   ],
   providers: [
     RegisterDeliveryManUseCase,
@@ -63,10 +72,12 @@ import { UpdateOrderStatusUseCase } from 'src/domain/deliveries/application/use-
     UpdateDeliveryManUseCase,
     GetDeliveryManUseCase,
     DeleteDeliveryManUseCase,
+    GetAllDeliveryMenUseCase,
     CreateRecipientUseCase,
     GetRecipientUseCase,
     UpdateRecipientUseCase,
     DeleteRecipientUseCase,
+    GetAllRecipientsUseCase,
     CreateOrderUseCase,
     GetOrderUseCase,
     DeleteOrderUseCase,
@@ -75,6 +86,7 @@ import { UpdateOrderStatusUseCase } from 'src/domain/deliveries/application/use-
     GetOrderByUserUseCase,
     DeliverOrderUseCase,
     UpdateOrderStatusUseCase,
+    GetAllOrdersUseCase,
   ],
 })
 export class HttpModule {}

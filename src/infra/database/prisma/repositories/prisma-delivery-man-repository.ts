@@ -38,6 +38,12 @@ export class PrismaDeliveryManRepository implements DeliveryManRepository {
 
     return PrismaDeliveryManMapper.toDomain(deliveryMan);
   }
+  async findMany(): Promise<DeliveryMan[]> {
+    const deliveryMen = await this.prisma.user.findMany();
+    return deliveryMen.map((deliveryMan) =>
+      PrismaDeliveryManMapper.toDomain(deliveryMan),
+    );
+  }
   async delete(id: string): Promise<void> {
     await this.prisma.user.delete({ where: { id } });
   }

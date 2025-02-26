@@ -11,6 +11,12 @@ export class PrismaRecipientRepository implements RecipientRepository {
     const data = PrismaRecipientMapper.toPrisma(recipient);
     await this.prisma.recipient.create({ data });
   }
+  async findMany(): Promise<Recipient[]> {
+    const recipients = await this.prisma.recipient.findMany();
+    return recipients.map((recipient) =>
+      PrismaRecipientMapper.toDomain(recipient),
+    );
+  }
   async findById(recipientId: string): Promise<Recipient | null> {
     const recipient = await this.prisma.recipient.findUnique({
       where: { id: recipientId },

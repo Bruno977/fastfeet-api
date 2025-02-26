@@ -12,6 +12,7 @@ import { Prisma, Recipient as RecipientPrisma } from '@prisma/client';
 @Injectable()
 export class PrismaOrderRepository implements OrderRepository {
   constructor(private prisma: PrismaService) {}
+
   async create(order: Order): Promise<void> {
     const data = PrismaOrderMapper.toPrisma(order);
     await this.prisma.order.create({ data });
@@ -42,6 +43,10 @@ export class PrismaOrderRepository implements OrderRepository {
         status: params.status,
       },
     });
+  }
+  async findMany(): Promise<Order[]> {
+    const orders = await this.prisma.order.findMany();
+    return orders.map((order) => PrismaOrderMapper.toDomain(order));
   }
   async findAllByUser(userId: string): Promise<Order[]> {
     const orders = await this.prisma.order.findMany({
