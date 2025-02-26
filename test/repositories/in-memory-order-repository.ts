@@ -1,3 +1,4 @@
+import { PaginationParams } from 'src/core/repositories/pagination-params';
 import { Geolocation } from 'src/domain/deliveries/application/geolocation/geolocation';
 import {
   findManyNearbyProps,
@@ -42,8 +43,9 @@ export class InMemoryOrderRepository implements OrderRepository {
     );
     return order;
   }
-  async findMany(): Promise<Order[]> {
-    return this.order;
+  async findMany({ page }: PaginationParams): Promise<Order[]> {
+    const orders = this.order.slice((page - 1) * 20, page * 20);
+    return orders;
   }
   async findManyNearby(params: findManyNearbyProps) {
     const nearbyOrders: Order[] = [];

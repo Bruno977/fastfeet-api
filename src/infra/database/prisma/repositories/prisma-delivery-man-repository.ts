@@ -3,6 +3,7 @@ import { DeliveryManRepository } from 'src/domain/deliveries/application/reposit
 import { DeliveryMan } from 'src/domain/deliveries/enterprise/entities/delivery-man';
 import { PrismaService } from '../prisma.service';
 import { PrismaDeliveryManMapper } from '../mappers/prisma-delivery-man-mapper';
+import { PaginationParams } from 'src/core/repositories/pagination-params';
 
 @Injectable()
 export class PrismaDeliveryManRepository implements DeliveryManRepository {
@@ -38,8 +39,11 @@ export class PrismaDeliveryManRepository implements DeliveryManRepository {
 
     return PrismaDeliveryManMapper.toDomain(deliveryMan);
   }
-  async findMany(): Promise<DeliveryMan[]> {
-    const deliveryMen = await this.prisma.user.findMany();
+  async findMany({ page }: PaginationParams): Promise<DeliveryMan[]> {
+    const deliveryMen = await this.prisma.user.findMany({
+      skip: (page - 1) * 20,
+      take: 20,
+    });
     return deliveryMen.map((deliveryMan) =>
       PrismaDeliveryManMapper.toDomain(deliveryMan),
     );

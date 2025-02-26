@@ -22,8 +22,21 @@ describe('GetAllRecipientsUseCase', () => {
 
     const { recipients } = await getAllRecipientsUseCase.execute({
       role: 'ADMIN',
+      page: 1,
     });
 
     expect(recipients).toHaveLength(5);
+  });
+  it('should return all Recipients paginated', async () => {
+    for (let i = 1; i <= 22; i++) {
+      await iMemoryRecipientRepository.create(makeRecipient());
+    }
+
+    const { recipients } = await getAllRecipientsUseCase.execute({
+      role: 'ADMIN',
+      page: 2,
+    });
+
+    expect(recipients).toHaveLength(2);
   });
 });

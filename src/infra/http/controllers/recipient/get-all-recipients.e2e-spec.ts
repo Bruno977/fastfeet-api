@@ -69,7 +69,7 @@ describe('Get All Recipients (E2E)', () => {
       role: deliveryMan.role,
     });
     const response = await request(app.getHttpServer())
-      .get(`/recipients`)
+      .get(`/recipients?page=1`)
       .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(200);

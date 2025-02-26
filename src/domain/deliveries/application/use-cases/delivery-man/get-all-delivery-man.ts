@@ -6,17 +6,18 @@ import { Injectable } from '@nestjs/common';
 
 interface GetAllDeliveryManRequest {
   role: RoleProps;
+  page: number;
 }
 @Injectable()
 export class GetAllDeliveryMenUseCase {
   constructor(private deliveryManRepository: DeliveryManRepository) {}
-  async execute({ role }: GetAllDeliveryManRequest) {
+  async execute({ role, page }: GetAllDeliveryManRequest) {
     const isAdmin = Authorization.hasPermission(role, 'get-all-delivery-man');
     if (!isAdmin) {
       throw new NotAllowedError();
     }
 
-    const deliveryMen = await this.deliveryManRepository.findMany();
+    const deliveryMen = await this.deliveryManRepository.findMany({ page });
     return { deliveryMen };
   }
 }

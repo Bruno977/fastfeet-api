@@ -3,6 +3,7 @@ import { RecipientRepository } from 'src/domain/deliveries/application/repositor
 import { Recipient } from 'src/domain/deliveries/enterprise/entities/recipient';
 import { PrismaService } from '../prisma.service';
 import { PrismaRecipientMapper } from '../mappers/prisma-recipient-mapper';
+import { PaginationParams } from 'src/core/repositories/pagination-params';
 
 @Injectable()
 export class PrismaRecipientRepository implements RecipientRepository {
@@ -11,8 +12,11 @@ export class PrismaRecipientRepository implements RecipientRepository {
     const data = PrismaRecipientMapper.toPrisma(recipient);
     await this.prisma.recipient.create({ data });
   }
-  async findMany(): Promise<Recipient[]> {
-    const recipients = await this.prisma.recipient.findMany();
+  async findMany({ page }: PaginationParams): Promise<Recipient[]> {
+    const recipients = await this.prisma.recipient.findMany({
+      skip: (page - 1) * 20,
+      take: 20,
+    });
     return recipients.map((recipient) =>
       PrismaRecipientMapper.toDomain(recipient),
     );

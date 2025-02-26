@@ -22,8 +22,21 @@ describe('GetAllDeliveryMen', () => {
 
     const { deliveryMen } = await getAllDeliveryMenUseCase.execute({
       role: 'ADMIN',
+      page: 1,
     });
 
     expect(deliveryMen).toHaveLength(5);
+  });
+  it('should return all delivery men paginated', async () => {
+    for (let i = 1; i <= 22; i++) {
+      await iMemoryDeliveryManRepository.create(makeDeliveryMan());
+    }
+
+    const { deliveryMen } = await getAllDeliveryMenUseCase.execute({
+      role: 'ADMIN',
+      page: 2,
+    });
+
+    expect(deliveryMen).toHaveLength(2);
   });
 });

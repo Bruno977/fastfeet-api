@@ -1,3 +1,4 @@
+import { PaginationParams } from 'src/core/repositories/pagination-params';
 import { RecipientRepository } from 'src/domain/deliveries/application/repositories/recipient-repository';
 import { Recipient } from 'src/domain/deliveries/enterprise/entities/recipient';
 
@@ -24,9 +25,11 @@ export class InMemoryRecipientRepository implements RecipientRepository {
     );
     this.recipients[recipientIndex] = recipient;
   }
-  async findMany(): Promise<Recipient[]> {
-    return this.recipients;
+  async findMany({ page }: PaginationParams): Promise<Recipient[]> {
+    const recipients = this.recipients.slice((page - 1) * 20, page * 20);
+    return recipients;
   }
+
   async delete(id: string) {
     this.recipients = this.recipients.filter(
       (recipient) => recipient.id.toString() !== id,

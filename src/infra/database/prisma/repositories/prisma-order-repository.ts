@@ -8,6 +8,7 @@ import { Order } from 'src/domain/deliveries/enterprise/entities/order';
 import { PrismaService } from '../prisma.service';
 import { PrismaOrderMapper } from '../mappers/prisma-order-mapper';
 import { Prisma, Recipient as RecipientPrisma } from '@prisma/client';
+import { PaginationParams } from 'src/core/repositories/pagination-params';
 
 @Injectable()
 export class PrismaOrderRepository implements OrderRepository {
@@ -44,8 +45,11 @@ export class PrismaOrderRepository implements OrderRepository {
       },
     });
   }
-  async findMany(): Promise<Order[]> {
-    const orders = await this.prisma.order.findMany();
+  async findMany({ page }: PaginationParams): Promise<Order[]> {
+    const orders = await this.prisma.order.findMany({
+      skip: (page - 1) * 20,
+      take: 20,
+    });
     return orders.map((order) => PrismaOrderMapper.toDomain(order));
   }
   async findAllByUser(userId: string): Promise<Order[]> {

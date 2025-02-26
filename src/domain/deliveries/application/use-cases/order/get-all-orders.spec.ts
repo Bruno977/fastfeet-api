@@ -25,8 +25,21 @@ describe('GetAllOrdersUseCase', () => {
 
     const { orders } = await getAllOrdersUseCase.execute({
       role: 'ADMIN',
+      page: 1,
     });
 
     expect(orders).toHaveLength(5);
+  });
+  it('should return all Orders paginated', async () => {
+    for (let i = 1; i <= 22; i++) {
+      await iMemoryOrderRepository.create(makeOrder());
+    }
+
+    const { orders } = await getAllOrdersUseCase.execute({
+      role: 'ADMIN',
+      page: 2,
+    });
+
+    expect(orders).toHaveLength(2);
   });
 });

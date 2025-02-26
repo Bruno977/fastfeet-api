@@ -1,5 +1,6 @@
 import { ORDER_STATUS } from 'src/core/types/orderStatus';
 import { Order } from '../../enterprise/entities/order';
+import { PaginationParams } from 'src/core/repositories/pagination-params';
 
 export interface updateOrderStatusProps {
   orderId: string;
@@ -19,6 +20,6 @@ export abstract class OrderRepository {
   abstract update(order: Order): Promise<void>;
   abstract updateOrderStatus(params: updateOrderStatusProps): Promise<void>;
   abstract findAllByUser(id: string): Promise<Order[]>;
-  abstract findMany(): Promise<Order[]>;
+  abstract findMany({ page }: PaginationParams): Promise<Order[]>;
   abstract findManyNearby(params: findManyNearbyProps): Promise<Order[]>;
 }

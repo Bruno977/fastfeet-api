@@ -1,3 +1,4 @@
+import { PaginationParams } from 'src/core/repositories/pagination-params';
 import { DeliveryManRepository } from 'src/domain/deliveries/application/repositories/delivery-man-repository';
 import { DeliveryMan } from 'src/domain/deliveries/enterprise/entities/delivery-man';
 
@@ -19,8 +20,9 @@ export class InMemoryDeliveryManRepository implements DeliveryManRepository {
       ) || null;
     return deliveryMan;
   }
-  async findMany(): Promise<DeliveryMan[]> {
-    return this.deliveryMan;
+  async findMany({ page }: PaginationParams): Promise<DeliveryMan[]> {
+    const deliveryMen = this.deliveryMan.slice((page - 1) * 20, page * 20);
+    return deliveryMen;
   }
   async update(deliveryMan: DeliveryMan) {
     const index = this.deliveryMan.findIndex(
