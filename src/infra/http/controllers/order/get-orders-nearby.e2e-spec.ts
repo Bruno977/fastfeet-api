@@ -81,7 +81,7 @@ describe('Get Order Nearby (E2E)', () => {
       role: deliveryMan.role,
     });
     const response = await request(app.getHttpServer())
-      .get(`/orders/nearby?latitude=-22.932381&longitude=-43.173639`)
+      .get(`/orders/nearby?latitude=-22.932381&longitude=-43.173639&page=1`)
       .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(200);

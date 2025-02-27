@@ -20,6 +20,12 @@ const coordinatesSchema = z.object({
   longitude: z.coerce.number().refine((value) => Math.abs(value) <= 180, {
     message: 'Longitude must be between -180 and 180',
   }),
+  page: z
+    .string()
+    .optional()
+    .default('1')
+    .transform(Number)
+    .pipe(z.number().min(1)),
 });
 
 type CoordinatesSchema = z.infer<typeof coordinatesSchema>;
@@ -41,12 +47,14 @@ export class GetOrdersNearbyController {
         deliveryManId: sub,
         deliveryManLatitude: query.latitude,
         deliveryManLongitude: query.longitude,
+        page: query.page,
       });
 
       return {
         orders: result.orders.map((order) => OrderPresenter.toHTTP(order)),
       };
     } catch (error) {
+      console.log(error);
       if (error instanceof NotAllowedError) {
         throw new UnauthorizedException(error.message);
       }

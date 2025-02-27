@@ -52,9 +52,16 @@ export class PrismaOrderRepository implements OrderRepository {
     });
     return orders.map((order) => PrismaOrderMapper.toDomain(order));
   }
-  async findAllByUser(userId: string): Promise<Order[]> {
+  async findAllByUser(
+    userId: string,
+    params?: PaginationParams,
+  ): Promise<Order[]> {
+    const skip = params?.page ? (params.page - 1) * 20 : undefined;
+    const take = params?.page ? 20 : undefined;
     const orders = await this.prisma.order.findMany({
       where: { user_id: userId },
+      skip: skip,
+      take: take,
     });
     return orders.map((order) => PrismaOrderMapper.toDomain(order));
   }
@@ -67,11 +74,14 @@ export class PrismaOrderRepository implements OrderRepository {
     const recipientIds = [
       ...new Set(userOrders.map((order) => order.recipient_id)),
     ];
+    const page = params.page || 1;
+    const offset = (page - 1) * 20;
 
     const nearbyRecipients = await this.prisma.$queryRaw<RecipientPrisma[]>`
       SELECT id FROM recipient
       WHERE id IN (${Prisma.join(recipientIds)})
-      AND ( 6371 * acos( cos( radians(${latitude}) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(${longitude}) ) + sin( radians(${latitude}) ) * sin( radians( latitude ) ) ) ) <= 10
+      AND ( 6371 * acos( cos( radians(${latitude}) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(${longitude}) ) + sin( radians(${latitude}) ) * sin( radians( latitude ) ) ) ) <= 10 
+      LIMIT ${20} OFFSET ${offset}
     `;
 
     const nearbyRecipientIds = nearbyRecipients.map(

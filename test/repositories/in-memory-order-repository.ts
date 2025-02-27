@@ -37,11 +37,18 @@ export class InMemoryOrderRepository implements OrderRepository {
       return order;
     });
   }
-  async findAllByUser(id: string) {
-    const order = this.order.filter(
+  async findAllByUser(id: string, params?: PaginationParams) {
+    const filteredOrders = this.order.filter(
       (order) => order.deliveryManId.toString() === id,
     );
-    return order;
+
+    if (params && params.page) {
+      const startIndex = (params.page - 1) * 20;
+      const endIndex = params.page * 20;
+      return filteredOrders.slice(startIndex, endIndex);
+    } else {
+      return filteredOrders;
+    }
   }
   async findMany({ page }: PaginationParams): Promise<Order[]> {
     const orders = this.order.slice((page - 1) * 20, page * 20);
@@ -70,6 +77,6 @@ export class InMemoryOrderRepository implements OrderRepository {
         nearbyOrders.push(order);
       }
     }
-    return nearbyOrders;
+    return nearbyOrders.slice((params.page - 1) * 20, params.page * 20);
   }
 }

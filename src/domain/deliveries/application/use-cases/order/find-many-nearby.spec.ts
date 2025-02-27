@@ -62,6 +62,7 @@ describe('Fetch Nearby Order Use Case', () => {
       deliveryManLatitude: -22.932381,
       deliveryManLongitude: -43.173639,
       deliveryManId: newDeliveryMan.id.toString(),
+      page: 1,
     });
     expect(orders).toHaveLength(2);
 
@@ -102,5 +103,30 @@ describe('Fetch Nearby Order Use Case', () => {
         recipientId: recipient2.id,
       }),
     );
+  });
+  it('should return all Orders nearby paginated', async () => {
+    const deliveryMan = makeDeliveryMan();
+    await inMemoryDeliveryManRepository.create(deliveryMan);
+    const recipient = makeRecipient();
+    recipient.address.latitude = -22.92445;
+    recipient.address.longitude = -43.171343;
+    await inMemoryRecipientRepository.create(recipient);
+    for (let i = 1; i <= 22; i++) {
+      await orderRepository.create(
+        makeOrder({
+          deliveryManId: deliveryMan.id,
+          recipientId: recipient.id,
+        }),
+      );
+    }
+
+    const { orders } = await findManyNearbyUseCase.execute({
+      deliveryManId: deliveryMan.id.toString(),
+      deliveryManLatitude: -22.932381,
+      deliveryManLongitude: -43.173639,
+      page: 2,
+    });
+
+    expect(orders).toHaveLength(2);
   });
 });

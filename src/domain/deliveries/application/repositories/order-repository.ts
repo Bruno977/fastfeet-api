@@ -11,6 +11,7 @@ export interface findManyNearbyProps {
   longitude: number;
   deliveryManId: string;
   orders: Order[];
+  page: number;
 }
 
 export abstract class OrderRepository {
@@ -19,7 +20,10 @@ export abstract class OrderRepository {
   abstract delete(id: string): Promise<void>;
   abstract update(order: Order): Promise<void>;
   abstract updateOrderStatus(params: updateOrderStatusProps): Promise<void>;
-  abstract findAllByUser(id: string): Promise<Order[]>;
+  abstract findAllByUser(
+    id: string,
+    params?: PaginationParams,
+  ): Promise<Order[]>;
   abstract findMany({ page }: PaginationParams): Promise<Order[]>;
   abstract findManyNearby(params: findManyNearbyProps): Promise<Order[]>;
 }

@@ -7,6 +7,7 @@ import { Injectable } from '@nestjs/common';
 interface GetOrderByUserUseCaseRequest {
   deliveryManId: string;
   currentUserId: string;
+  page: number;
 }
 
 @Injectable()
@@ -18,6 +19,7 @@ export class GetOrderByUserUseCase {
   async execute({
     deliveryManId,
     currentUserId,
+    page,
   }: GetOrderByUserUseCaseRequest) {
     const deliveryMan =
       await this.deliveryManRepository.findById(deliveryManId);
@@ -28,7 +30,9 @@ export class GetOrderByUserUseCase {
       throw new NotAllowedError();
     }
 
-    const orders = await this.orderRepository.findAllByUser(deliveryManId);
+    const orders = await this.orderRepository.findAllByUser(deliveryManId, {
+      page,
+    });
     return { orders };
   }
 }

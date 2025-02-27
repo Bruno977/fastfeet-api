@@ -78,7 +78,7 @@ describe('Get Order By User (E2E)', () => {
       role: deliveryMan.role,
     });
     const response = await request(app.getHttpServer())
-      .get(`/users/${deliveryMan.id.toString()}/orders`)
+      .get(`/users/${deliveryMan.id.toString()}/orders?page=1`)
       .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(200);

@@ -53,6 +53,7 @@ describe('GetOrderByUserUseCase', () => {
     const order = await getOrderByUserUseCase.execute({
       deliveryManId: deliveryMan.id.toString(),
       currentUserId: deliveryMan.id.toString(),
+      page: 1,
     });
     expect(order.orders).toHaveLength(3);
   });
@@ -61,6 +62,7 @@ describe('GetOrderByUserUseCase', () => {
       getOrderByUserUseCase.execute({
         deliveryManId: '123',
         currentUserId: '123',
+        page: 1,
       }),
     ).rejects.toThrow(DeliveryManNotFoundError);
   });
@@ -80,7 +82,27 @@ describe('GetOrderByUserUseCase', () => {
       getOrderByUserUseCase.execute({
         deliveryManId: deliveryMan2.id.toString(),
         currentUserId: deliveryMan.id.toString(),
+        page: 1,
       }),
     ).rejects.toThrow(NotAllowedError);
+  });
+  it('should return all Orders by user paginated', async () => {
+    const deliveryMan = makeDeliveryMan();
+    await inMemoryDeliveryManRepository.create(deliveryMan);
+    for (let i = 1; i <= 22; i++) {
+      await inMemoryOrderRepository.create(
+        makeOrder({
+          deliveryManId: deliveryMan.id,
+        }),
+      );
+    }
+
+    const { orders } = await getOrderByUserUseCase.execute({
+      deliveryManId: deliveryMan.id.toString(),
+      currentUserId: deliveryMan.id.toString(),
+      page: 2,
+    });
+
+    expect(orders).toHaveLength(2);
   });
 });

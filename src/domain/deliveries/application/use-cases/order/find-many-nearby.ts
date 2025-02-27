@@ -7,6 +7,7 @@ interface findManyNearbyUseCaseProps {
   deliveryManLatitude: number;
   deliveryManLongitude: number;
   deliveryManId: string;
+  page: number;
 }
 
 @Injectable()
@@ -20,6 +21,7 @@ export class FindManyNearbyUseCase {
     deliveryManLatitude,
     deliveryManLongitude,
     deliveryManId,
+    page,
   }: findManyNearbyUseCaseProps) {
     const deliveryMan =
       await this.deliveryManRepository.findById(deliveryManId);
@@ -27,18 +29,16 @@ export class FindManyNearbyUseCase {
     if (!deliveryMan) {
       throw new NotAllowedError();
     }
+    console.log(page);
     const ordersDeliveryMan =
       await this.orderRepository.findAllByUser(deliveryManId);
-
-    // if (!ordersDeliveryMan) {
-    //   return [];
-    // }
 
     const orders = await this.orderRepository.findManyNearby({
       deliveryManId,
       latitude: deliveryManLatitude,
       longitude: deliveryManLongitude,
       orders: ordersDeliveryMan,
+      page,
     });
 
     return {
