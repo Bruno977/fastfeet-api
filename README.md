@@ -1,3 +1,8 @@
+# FastFeet API
+
+Desafio 05 - API para controle de encomendas de uma transportadora fictícia.
+Desafio Ignite Rocketseat
+
 ### Regras da aplicação
 
 - [x] A aplicação deve ter dois tipos de usuário, entregador e/ou admin
@@ -12,8 +17,7 @@
 - [x] Deve ser possível listar as encomendas com endereços de entrega próximo ao local do entregador
 - [x] Deve ser possível alterar a senha de um usuário
 - [x] Deve ser possível listar as entregas de um usuário
-- Deve ser possível notificar o destinatário a cada alteração no status da encomenda
-
+  
 ### Regras de negócio
 
 - [x] Somente usuário do tipo admin pode realizar operações de CRUD nas encomendas
@@ -24,33 +28,17 @@
 - [x] Somente o admin pode alterar a senha de um usuário
 - [x] Não deve ser possível um entregador listar as encomendas de outro entregador
 
-Domain:
-- deliveries
-    - Entities:
-      - [x] DeliveryMan (entregador)
-      - [x] Order (encomenda)
-      - [x] Recipient (destinatário)
-      - [x] Address (endereço)
-        - Use Cases:
-          - [x] AuthenticateDeliveryMan (Autenticar entregador)
-          - [x] CreateDeliveryMan (Criar entregador)
-          - [x] UpdateDeliveryMan (Atualizar entregador)
-          - [x] DeleteDeliveryMan (Remover entregador)
-          - [x] FindDeliveryMan (Buscar entregador)
-          - [x] CreateOrder (Criar encomenda)
-          - [x] UpdateOrder (Atualizar encomenda)
-          - [x] DeleteOrder (Remover encomenda)
-          - [x] FindOrder (Buscar encomenda)
-          - [x] CreateRecipient (Criar destinatário)
-          - [x] UpdateRecipient (Atualizar destinatário)
-          - [x] DeleteRecipient (Remover destinatário)
-          - [x] FindRecipient (Buscar destinatário)
-          - PickUpOrder (Retirar uma encomenda)
-          - [x] UpdateOrderStatus (Alterar status da encomenda)
-          - [x] ListOrders (Listar as encomendas)
-          - ListDeliveries (Listar as entregas)
-- notification
-    - Entities:
-      - Notification (notificação)
-    - Use Cases:
-      - NotifyRecipient (Notificar o destinatário)
+## Tecnologias Utilizadas
+
+- [Fastify](https://fastify.dev/)
+- [Zod](https://github.com/colinhacks/zod)
+- [Dotenv](https://github.com/motdotla/dotenv)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vitest](https://vitest.dev/)
+- [ESLint](https://eslint.org/)
+- [Prisma](https://www.prisma.io/)
+- [Supertest](https://github.com/ladjs/supertest)
+- [Bcrypt/Bcryptjs](https://github.com/dcodeIO/bcrypt.js)
+- [@fastify/cookie](https://github.com/fastify/fastify-cookie)
+- [@fastify/jwt](https://github.com/fastify/fastify-jwt)
+- [AWS S3](https://aws.amazon.com/pt/s3/)
